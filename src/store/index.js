@@ -5,7 +5,10 @@ import { socket } from '../io';
 import * as actionTypes from './action-types';
 import location from './reducers/location';
 
-const { CHARACTER_JOIN, CHANGE_LOCATION, CHARACTER_UPDATE, LOAD_GAME } = actionTypes;
+const {
+  CHARACTER_JOIN, CHANGE_LOCATION, CHARACTER_UPDATE, LOAD_GAME,
+  CHARACTER_LEAVE
+} = actionTypes;
 
 const reducers = combineReducers({
   location
@@ -24,9 +27,14 @@ export const store = createStore(
   )
 );
 
-const handleAction = action => store.dispatch(action);
+const handleAction = (action, propagate) => store.dispatch({
+  ...action, meta: { io: propagate, ...action.meta }
+});
 
-socket.on(CHARACTER_JOIN, (action) => store.dispatch({ type: CHARACTER_JOIN, ...action }));
-socket.on(CHANGE_LOCATION, handleAction);
-socket.on(CHARACTER_UPDATE, handleAction);
 socket.on(LOAD_GAME, handleAction);
+
+socket.on(CHARACTER_JOIN, handleAction);
+socket.on(CHARACTER_LEAVE, handleAction);
+socket.on(CHANGE_LOCATION, handleAction);
+
+socket.on(CHARACTER_UPDATE, handleAction);

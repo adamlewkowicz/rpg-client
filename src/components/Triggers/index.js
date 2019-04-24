@@ -49,7 +49,11 @@ class Triggers extends React.Component {
       <>
         <button onClick={() => this.props.dispatch({
           type: 'REQUEST_LOCATION_CHANGE',
-          meta: { locationId: 2 }
+          meta: {
+            prevLocationId: this.props.location.locationId,
+            nextLocationId: 2,
+            locationId: 2
+          }
         })}>
           Change location to Novigrad
         </button>

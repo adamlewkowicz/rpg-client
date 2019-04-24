@@ -17,10 +17,10 @@ const STATUS = {
 const initialState = {
   charId: null,
   status: STATUS.LOADING,
-  character: null,
+  character: null, /* Deprecated - extract own char from characaters */
   characters: {},
 
-  location: {}
+  location: null
 }
 
 const location = (state = initialState, action) => {
@@ -40,7 +40,7 @@ const location = (state = initialState, action) => {
     case LOAD_LOCATION: return action.payload;
     case REQUEST_LOCATION_CHANGE: return {
       ...state,
-      locationId: action.meta.locationId,
+      location: null,
       status: STATUS.CHANGING_LOCATION
     }
     case CHANGE_LOCATION: {
@@ -69,11 +69,11 @@ const location = (state = initialState, action) => {
       ...state,
       characters: {
         ...state.characters,
-        [action.meta.charId]: action.payload
+        [action.payload.id]: action.payload
       }
     }
     case CHARACTER_LEAVE: 
-      const { [action.payload.charId]: deleted, ...characters } = state.characters;
+      const { [action.payload]: deleted, ...characters } = state.characters;
       return { ...state, characters };
     default: return state;
   }
