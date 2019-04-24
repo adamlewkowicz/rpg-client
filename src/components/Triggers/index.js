@@ -2,13 +2,16 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 
-const Triggers = (props) => {
+const Triggers = ({ dispatch }) => {
 
 
   return (
     <>
-      <button onClick={() => dispatch({ type: 'CHANGE_LOCATION' })}>
-        Trigger
+      <button onClick={() => dispatch({
+        type: 'REQUEST_LOCATION_CHANGE',
+        meta: { locationId: 2 }
+      })}>
+        Change location to Novigrad
       </button>
 
     </>

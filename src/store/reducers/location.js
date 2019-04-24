@@ -3,13 +3,20 @@ import {
   CHARACTER_JOIN,
   CHARACTER_LEAVE,
   CHARACTER_UPDATE,
-  CHANGE_LOCATION
+  CHANGE_LOCATION,
+  REQUEST_LOCATION_CHANGE
 } from '../action-types';
+
+const STATUS = {
+  IDLE: 'IDLE',
+  CHANGING_LOCATION: 'CHANGING_LOCATION'
+}
 
 const initialState = {
   locationName: null,
   locationId: null,
   charId: null,
+  status: STATUS.IDLE,
   characters: {
     1: { id: 1, positionX: 42, positionY: 12 }
   },
@@ -20,12 +27,21 @@ const initialState = {
 const location = (state = initialState, action) => {
   switch(action.type) {
     case LOAD_LOCATION: return action.payload;
-    case CHANGE_LOCATION:
+    case REQUEST_LOCATION_CHANGE: return {
+      ...state,
+      locationId: action.meta.locationId,
+      status: STATUS.CHANGING_LOCATION
+    }
+    case CHANGE_LOCATION: {
       const { [state.charId]: myCharacter } = state.characters;
+      const { location, characters } = action.payload;
       return {
         ...state,
-        characters: { [state.charId]: myCharacter, ...characters }
+        location: location,
+        characters: { [state.charId]: myCharacter, ...characters },
+        status: STATUS.IDLE
       }
+    }
     case CHARACTER_UPDATE:
       const charId = action.meta.charId || state.charId;
       return {

@@ -1,5 +1,6 @@
 import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
+import websocketMiddleware from './middleware/websockets';
 
 import location from './reducers/location';
 
@@ -14,7 +15,8 @@ export const store = createStore(
   /* preloadedState, */
   composeEnhancers(
     applyMiddleware(
-      thunk
+      thunk,
+      websocketMiddleware
     )
   )
 );
