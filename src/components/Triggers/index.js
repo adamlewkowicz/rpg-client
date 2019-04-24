@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
+class Triggers extends React.Component {
 
-const Triggers = ({ dispatch, location }) => {
-
-  useEffect(() => {
+  componentDidMount() {
     document.addEventListener('keydown', (event) => {
       const movementKeys = {
         87: 'w',
@@ -13,8 +12,9 @@ const Triggers = ({ dispatch, location }) => {
         68: 'd'
       }
       const key = movementKeys[event.keyCode];
-      const charId = 1 // location.charId;
-      let { positionX, positionY } = location.characters[charId];
+
+      const charId = this.props.location.character.id;
+      let { positionX, positionY } = this.props.location.characters[charId];
 
       switch(key) {
         case 'w':
@@ -32,27 +32,31 @@ const Triggers = ({ dispatch, location }) => {
         default: return;
       }
 
-      dispatch({
+      this.props.dispatch({
         type: 'CHARACTER_UPDATE',
         payload: { positionX, positionY },
         meta: { charId, key }
       });
     });
+  }
 
-    return () => document.removeEventListener('keydown');
-  }, []);
+  componentWillUnmount() {
+    document.removeEventListener('keydown');
+  }
 
-  return (
-    <>
-      <button onClick={() => dispatch({
-        type: 'REQUEST_LOCATION_CHANGE',
-        meta: { locationId: 2 }
-      })}>
-        Change location to Novigrad
-      </button>
-
-    </>
-  )
+  render() {
+    return (
+      <>
+        <button onClick={() => this.props.dispatch({
+          type: 'REQUEST_LOCATION_CHANGE',
+          meta: { locationId: 2 }
+        })}>
+          Change location to Novigrad
+        </button>
+  
+      </>
+    )
+  }
 }
 
 const TriggersWithStore = connect(

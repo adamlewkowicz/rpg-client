@@ -17,9 +17,8 @@ const STATUS = {
 const initialState = {
   charId: null,
   status: STATUS.LOADING,
-  characters: {
-    1: { id: 1, positionX: 42, positionY: 12 }
-  },
+  character: null,
+  characters: {},
 
   location: {}
 }
@@ -30,7 +29,8 @@ const location = (state = initialState, action) => {
       ...state,
       location: action.payload.location,
       charId: action.payload.character.id,
-      characters: action.payload.characters
+      character: action.payload.character,
+      characters: [...action.payload.characters, action.payload.character]
         .reduce((mergedChars, character) => ({
           ...mergedChars,
           [character.id]: character
