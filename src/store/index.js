@@ -7,7 +7,14 @@ const reducers = combineReducers({
   location
 });
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 export const store = createStore(
   reducers,
-  applyMiddleware(thunk)
+  /* preloadedState, */
+  composeEnhancers(
+    applyMiddleware(
+      thunk
+    )
+  )
 );
