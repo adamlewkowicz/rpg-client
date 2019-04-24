@@ -4,19 +4,19 @@ import {
   CHARACTER_LEAVE,
   CHARACTER_UPDATE,
   CHANGE_LOCATION,
-  REQUEST_LOCATION_CHANGE
+  REQUEST_LOCATION_CHANGE,
+  LOAD_GAME
 } from '../action-types';
 
 const STATUS = {
   IDLE: 'IDLE',
+  LOADING: 'LOADING',
   CHANGING_LOCATION: 'CHANGING_LOCATION'
 }
 
 const initialState = {
-  locationName: null,
-  locationId: null,
   charId: null,
-  status: STATUS.IDLE,
+  status: STATUS.LOADING,
   characters: {
     1: { id: 1, positionX: 42, positionY: 12 }
   },
@@ -26,6 +26,17 @@ const initialState = {
 
 const location = (state = initialState, action) => {
   switch(action.type) {
+    case LOAD_GAME: return {
+      ...state,
+      location: action.payload.location,
+      charId: action.payload.character.id,
+      characters: action.payload.characters
+        .reduce((mergedChars, character) => ({
+          ...mergedChars,
+          [character.id]: character
+        }), {}),
+      status: STATUS.IDLE
+    }
     case LOAD_LOCATION: return action.payload;
     case REQUEST_LOCATION_CHANGE: return {
       ...state,
@@ -43,7 +54,7 @@ const location = (state = initialState, action) => {
       }
     }
     case CHARACTER_UPDATE:
-      const charId = action.meta.charId || state.charId;
+      const charId = action.meta.charId || state.charId || 1;
       return {
         ...state,
         characters: {

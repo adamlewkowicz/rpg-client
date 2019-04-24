@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { store } from './store/index';
 
 import { Triggers } from './components/Triggers';
+import { socket } from './io';
 
 class App extends React.Component {
 
