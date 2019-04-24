@@ -27,6 +27,6 @@ export const store = createStore(
 const handleAction = action => store.dispatch(action);
 
 socket.on(CHARACTER_JOIN, (action) => store.dispatch({ type: CHARACTER_JOIN, ...action }));
-socket.on(CHANGE_LOCATION, handle);
+socket.on(CHANGE_LOCATION, handleAction);
 socket.on(CHARACTER_UPDATE, console.log);
-socket.on(LOAD_GAME, handle);
+socket.on(LOAD_GAME, handleAction);
