@@ -2,25 +2,12 @@ import {
   SEND_MESSAGE,
   RECEIVE_MESSAGE
 } from '../action-types';
-
-const charIdOne = 1;
-const charIdTwo = 2;
-
-const groupId = 1;
+import { MESSAGE_TYPES } from '../consts';
+const { PRIVATE, GROUP, LOCAL } = MESSAGE_TYPES;
 
 const initialState = {
-  privateMessages: {
-    [charIdOne]: [],
-    [charIdTwo]: []
-  },
-  groupMessages: {
-    [groupId]: []
-  },
-  localMessages: {},
-
-  private: {
-
-  },
+  private: {},
+  group: {},
 
   local: [],
   global: []
@@ -32,10 +19,30 @@ const chat = (state = initialState, action) => {
       ...state,
       local: [...state.local, action.payload] 
     }
-    case RECEIVE_MESSAGE: return {
-      ...state,
-      local: [...state.local, action.payload]
-    }
+    case RECEIVE_MESSAGE:
+      const messageType = action.payload.type;
+
+      switch(messageType) {
+        case LOCAL: return {
+          ...state,
+          local: [...state.local, action.payload]
+        }
+        case PRIVATE:
+        case GROUP: {
+          const target = messageType.toLowerCase();
+          const { fromCharId } = action.payload;
+          const { [fromCharId]: senderMessages = [], ...rest } = state[target];
+          
+          return {
+            ...state,
+            [target]: {
+              ...rest,
+              [fromCharId]: [...senderMessages, action.payload]
+            }
+          }
+        }
+        default: throw new Error(`Invalid message type ${messageType}`)
+      }
     default: return state;
   }
 }

@@ -1,14 +1,7 @@
 import {
   SEND_MESSAGE
 } from '../action-types';
-
-const MESSAGE_TYPES = {
-  PRIVATE: 'PRIVATE',
-  GROUP: 'GROUP',
-  CLAN: 'CLAN',
-  LOCAL: 'LOCAL',
-  GLOBAL: 'GLOBAL'
-}
+import { MESSAGE_TYPES } from '../consts';
 
 /*
   Types of message

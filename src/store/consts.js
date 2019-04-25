@@ -1,0 +1,8 @@
+
+export const MESSAGE_TYPES = {
+  PRIVATE: 'PRIVATE',
+  GROUP: 'GROUP',
+  CLAN: 'CLAN',
+  LOCAL: 'LOCAL',
+  GLOBAL: 'GLOBAL'
+}
