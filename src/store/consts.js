@@ -6,3 +6,10 @@ export const MESSAGE_TYPES = {
   LOCAL: 'LOCAL',
   GLOBAL: 'GLOBAL'
 }
+
+export const CHARACTER_STATUS = {
+  IDLE: 'IDLE',
+  FIGHTING: 'FIGHTING',
+  TRADING: 'TRADING',
+  ASLEEP: 'ASLEEP'
+}

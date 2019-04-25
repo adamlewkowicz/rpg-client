@@ -7,6 +7,7 @@ import {
   REQUEST_LOCATION_CHANGE,
   LOAD_GAME
 } from '../action-types';
+import { CHARACTER_STATUS } from '../consts';
 
 const STATUS = {
   IDLE: 'IDLE',
@@ -33,7 +34,10 @@ const game = (state = initialState, action) => {
       characters: [...action.payload.characters, action.payload.character]
         .reduce((mergedChars, character) => ({
           ...mergedChars,
-          [character.id]: character
+          [character.id]: {
+            ...character,
+            status: CHARACTER_STATUS.IDLE
+          }
         }), {}),
       status: STATUS.IDLE
     }
