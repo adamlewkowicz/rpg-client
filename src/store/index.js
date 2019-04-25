@@ -4,14 +4,16 @@ import websocketMiddleware from './middleware/websockets';
 import { socket } from '../io';
 import * as actionTypes from './action-types';
 import game from './reducers/game';
+import chat from './reducers/chat';
 
 const {
   CHARACTER_JOIN, CHANGE_LOCATION, CHARACTER_UPDATE, LOAD_GAME,
-  CHARACTER_LEAVE
+  CHARACTER_LEAVE, RECEIVE_MESSAGE
 } = actionTypes;
 
 const reducers = combineReducers({
-  game
+  game,
+  chat
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -27,7 +29,7 @@ export const store = createStore(
   )
 );
 
-const handleAction = (action, propagate) => store.dispatch({
+const handleAction = (action, propagate = false) => store.dispatch({
   ...action, meta: { io: propagate, ...action.meta }
 });
 
@@ -38,3 +40,6 @@ socket.on(CHARACTER_LEAVE, handleAction);
 socket.on(CHANGE_LOCATION, handleAction);
 
 socket.on(CHARACTER_UPDATE, handleAction);
+
+/* Chat */
+socket.on(RECEIVE_MESSAGE, handleAction);

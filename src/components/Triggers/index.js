@@ -1,7 +1,12 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import { sendMessage } from '../../store/actions/chat';
 
 class Triggers extends React.Component {
+
+  state = {
+    message: ''
+  }
 
   componentDidMount() {
     document.addEventListener('keydown', (event) => {
@@ -13,8 +18,9 @@ class Triggers extends React.Component {
       }
       const key = movementKeys[event.keyCode];
 
-      const { charId } = this.props.game;
-      let { positionX, positionY } = this.props.game.characters[charId];
+      const { charId, characters } = this.props.game;
+      const { [charId]: myCharacter = {} } = characters;
+      let { positionX = 0, positionY = 0 } = myCharacter;
 
       switch(key) {
         case 'w':
@@ -59,6 +65,18 @@ class Triggers extends React.Component {
         })}>
           Change location to Yard
         </button>
+        <br />
+        <button onClick={() => this.props.dispatch(sendMessage('Hello world'))}>
+          Send message
+        </button>
+        <button onClick={() => this.props.dispatch(sendMessage('Hello world', this.state.message, 'PRIVATE'))}>
+          Send private message
+        </button>
+        <input
+          type="text"
+          value={this.state.message}
+          onChange={e => this.setState({ message: e.target.value })} 
+        />
   
       </>
     )
