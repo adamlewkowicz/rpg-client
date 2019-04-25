@@ -3,7 +3,7 @@ import thunk from 'redux-thunk';
 import websocketMiddleware from './middleware/websockets';
 import { socket } from '../io';
 import * as actionTypes from './action-types';
-import location from './reducers/location';
+import game from './reducers/game';
 
 const {
   CHARACTER_JOIN, CHANGE_LOCATION, CHARACTER_UPDATE, LOAD_GAME,
@@ -11,7 +11,7 @@ const {
 } = actionTypes;
 
 const reducers = combineReducers({
-  location
+  game
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -23,7 +23,7 @@ const initialState = {
   location: null
 }
 
-const location = (state = initialState, action) => {
+const game = (state = initialState, action) => {
   switch(action.type) {
     case LOAD_GAME: return {
       ...state,
@@ -79,4 +79,4 @@ const location = (state = initialState, action) => {
   }
 }
 
-export default location;
+export default game;
