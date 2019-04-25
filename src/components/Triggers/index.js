@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { sendPrivateMessage, sendLocalMessage } from '../../store/actions/chat';
-import { dropItem } from '../../store/actions/items';
+import { dropItem, pickupItem } from '../../store/actions/items';
 
 class Triggers extends React.Component {
 
@@ -88,8 +88,11 @@ class Triggers extends React.Component {
         />
 
         <br />
-        <button onClick={() => this.props.dispatch(dropItem(this.state.message))}>
+        <button onClick={() => this.props.dispatch(dropItem(this.props.items.inventory[this.state.message]))}>
           Drop item ({this.state.message})
+        </button>
+        <button onClick={() => this.props.dispatch(pickupItem(this.props.items.dropped[this.state.message]))}>
+          Pickup item ({this.state.message})
         </button>
       </>
     )
@@ -97,7 +100,7 @@ class Triggers extends React.Component {
 }
 
 const TriggersWithStore = connect(
-  (state) => ({ game: state.game }),
+  ({ items, game }) => ({ items, game }),
   (dispatch) => ({
     increment: () => dispatch({ type: 'INC' }),
     dispatch

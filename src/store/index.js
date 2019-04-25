@@ -10,7 +10,8 @@ import items from './reducers/items/index';
 
 const {
   CHARACTER_JOIN, CHANGE_LOCATION, CHARACTER_UPDATE, LOAD_GAME,
-  CHARACTER_LEAVE, RECEIVE_MESSAGE
+  CHARACTER_LEAVE, RECEIVE_MESSAGE,
+  $_ITEM_DROPPED_ADD, $_ITEM_DROPPED_REMOVE
 } = actionTypes;
 
 const reducers = combineReducers({
@@ -32,9 +33,12 @@ export const store = createStore(
   )
 );
 
-const handleAction = (action, propagate = false) => store.dispatch({
-  ...action, meta: { io: propagate, ...action.meta }
-});
+const handleAction = (action, propagate = false) => {
+  const io = !action.type.startsWith('$') // !action.type.startsWith('$') || propagate;
+  store.dispatch({
+    ...action, meta: { io, ...action.meta }
+  });
+}
 
 socket.on(LOAD_GAME, handleAction);
 
@@ -46,3 +50,7 @@ socket.on(CHARACTER_UPDATE, handleAction);
 
 /* Chat */
 socket.on(RECEIVE_MESSAGE, handleAction);
+
+/* Items */
+socket.on($_ITEM_DROPPED_ADD, handleAction);
+socket.on($_ITEM_DROPPED_REMOVE, handleAction);

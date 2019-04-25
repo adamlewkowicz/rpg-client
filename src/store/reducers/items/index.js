@@ -12,7 +12,6 @@ import { normalize } from '../../../utils';
 
 export const initialState = {
   inventory: {},
-  droppedItems: {},
   dropped: {},
 
   inventoryLimit: null
@@ -36,37 +35,37 @@ const items = (state = initialState, action) => {
       }
 
     case ITEM_DROP: {
-      const { [action.payload]: droppedItem, ...inventory } = state.inventory;
+      const { [action.payload.id]: droppedItem, ...inventory } = state.inventory;
       return {
         ...state,
         inventory,
-        droppedItems: {
-          ...state.droppedItems,
+        dropped: {
+          ...state.dropped,
           [droppedItem.id]: droppedItem
         }
       }
     }
     case ITEM_PICKUP: {
-      const { [action.payload]: pickedItem, ...droppedItems } = state.droppedItems;
+      const { [action.payload.id]: pickedItem, ...dropped } = state.dropped;
       return {
         ...state,
-        droppedItems,
+        dropped,
         inventory: {
-          ...state,
+          ...state.inventory,
           [pickedItem.id]: pickedItem
         }
       }
     }
     case $_ITEM_DROPPED_ADD: return {
       ...state,
-      droppedItems: {
-        ...state.droppedItems,
+      dropped: {
+        ...state.dropped,
         [action.payload.id]: action.payload
       }
     }
     case $_ITEM_DROPPED_REMOVE: {
-      const { [action.payload]: deleted, ...droppedItems } = state.droppedItems;
-      return { ...state, droppedItems };
+      const { [action.payload.id]: deleted, ...dropped } = state.dropped;
+      return { ...state, dropped };
     }
     default: return state;
   }
