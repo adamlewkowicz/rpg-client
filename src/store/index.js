@@ -5,7 +5,7 @@ import { socket } from '../io';
 import * as actionTypes from './action-types';
 import game from './reducers/game';
 import chat from './reducers/chat';
-import items from './reducers/items';
+import items from './reducers/items/index';
 
 
 const {

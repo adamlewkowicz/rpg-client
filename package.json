@@ -32,5 +32,19 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^.+\\.(css|less|svg|scss)$": "identity-obj-proxy"
+    },
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/cypress/",
+      "/cache/"
+    ]
+  },
+  "devDependencies": {
+    "jest": "^24.7.1",
+    "react-test-renderer": "^16.8.6"
   }
 }

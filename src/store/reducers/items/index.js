@@ -7,10 +7,10 @@ import {
 
   $_ITEM_DROPPED_ADD,
   $_ITEM_DROPPED_REMOVE
-} from '../action-types';
-import { normalize } from '../../utils';
+} from '../../action-types';
+import { normalize } from '../../../utils';
 
-const initialState = {
+export const initialState = {
   inventory: {},
   droppedItems: {},
   dropped: {},

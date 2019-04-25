@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { sendPrivateMessage, sendLocalMessage } from '../../store/actions/chat';
-import { dropItem } from '../../store/actions/inventory';
+import { dropItem } from '../../store/actions/items';
 
 class Triggers extends React.Component {
 
