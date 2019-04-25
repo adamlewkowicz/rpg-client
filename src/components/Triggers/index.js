@@ -5,7 +5,8 @@ import { sendPrivateMessage, sendLocalMessage } from '../../store/actions/chat';
 class Triggers extends React.Component {
 
   state = {
-    message: ''
+    message: 'o wiadomosc 👽',
+    receiverId: ''
   }
 
   componentDidMount() {
@@ -66,16 +67,23 @@ class Triggers extends React.Component {
           Change location to Yard
         </button>
         <br />
-        <button onClick={() => this.props.dispatch(sendLocalMessage('Hello world'))}>
+        <button onClick={() => this.props.dispatch(sendLocalMessage(this.state.message))}>
           Send message
         </button>
-        <button onClick={() => this.props.dispatch(sendPrivateMessage('Hello world', this.state.message))}>
+        <button onClick={() => this.props.dispatch(sendPrivateMessage(this.state.message, this.state.receiverId))}>
           Send private message
         </button>
+        Message
         <input
           type="text"
           value={this.state.message}
           onChange={e => this.setState({ message: e.target.value })} 
+        />
+        To:
+        <input
+          type="text"
+          value={this.state.receiverId}
+          onChange={e => this.setState({ receiverId: e.target.value })} 
         />
   
       </>
