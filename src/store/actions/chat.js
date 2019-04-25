@@ -2,6 +2,7 @@ import {
   SEND_MESSAGE
 } from '../action-types';
 import { MESSAGE_TYPES } from '../consts';
+const { PRIVATE, GROUP, LOCAL } = MESSAGE_TYPES;
 
 /*
   Types of message
@@ -11,7 +12,30 @@ import { MESSAGE_TYPES } from '../consts';
   - LOCAL - current location
   - GLOBAL - admin only - sends to all sockets
 */
-export const sendMessage = (data, to = null, type = MESSAGE_TYPES.LOCAL) => ({
+
+export const sendLocalMessage = (data) => ({
   type: SEND_MESSAGE,
-  payload: { to, type, data }
+  payload: {
+    type: LOCAL,
+    data,
+    to: null
+  }
+});
+
+export const sendPrivateMessage = (data, to) => ({
+  type: SEND_MESSAGE,
+  payload: {
+    type: PRIVATE,
+    data,
+    to
+  }
+});
+
+export const sendGroupMessage = (data, to) => ({
+  type: SEND_MESSAGE,
+  payload: {
+    type: GROUP,
+    data,
+    to
+  }
 });

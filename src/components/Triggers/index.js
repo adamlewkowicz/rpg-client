@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
-import { sendMessage } from '../../store/actions/chat';
+import { sendPrivateMessage, sendLocalMessage } from '../../store/actions/chat';
 
 class Triggers extends React.Component {
 
@@ -66,10 +66,10 @@ class Triggers extends React.Component {
           Change location to Yard
         </button>
         <br />
-        <button onClick={() => this.props.dispatch(sendMessage('Hello world'))}>
+        <button onClick={() => this.props.dispatch(sendLocalMessage('Hello world'))}>
           Send message
         </button>
-        <button onClick={() => this.props.dispatch(sendMessage('Hello world', this.state.message, 'PRIVATE'))}>
+        <button onClick={() => this.props.dispatch(sendPrivateMessage('Hello world', this.state.message))}>
           Send private message
         </button>
         <input
