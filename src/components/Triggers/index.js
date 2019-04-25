@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { sendPrivateMessage, sendLocalMessage } from '../../store/actions/chat';
-import { dropItem, pickupItem } from '../../store/actions/items';
+import { dropItem, pickupItem, moveItem } from '../../store/actions/items';
 
 class Triggers extends React.Component {
 
@@ -93,6 +93,9 @@ class Triggers extends React.Component {
         </button>
         <button onClick={() => this.props.dispatch(pickupItem(this.props.items.dropped[this.state.message]))}>
           Pickup item ({this.state.message})
+        </button>
+        <button onClick={() => this.props.dispatch(moveItem(this.state.message, 41))}>
+          Move item - next position ({this.state.message})
         </button>
       </>
     )

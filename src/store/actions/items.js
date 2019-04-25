@@ -10,8 +10,8 @@ import {
 
 export const moveItem = (itemId, position) => ({
   type: ITEM_UPDATE,
-  payload: { position, itemId },
-  meta: { io: false, itemId }
+  payload: { data: { position }, id: itemId, itemId },
+  meta: { itemId }
 });
 
 export const pickupItem = (item) => ({

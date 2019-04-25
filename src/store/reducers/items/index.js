@@ -24,13 +24,13 @@ const items = (state = initialState, action) => {
       inventory: normalize(action.payload.inventory),
       inventoryLimit: 30
     }
-    case ITEM_UPDATE: 
-      const { [action.meta.id]: desiredItem, ...items } = state.inventory;
+    case ITEM_UPDATE:
+      const { [action.payload.id]: desiredItem, ...items } = state.inventory;
       return {
         ...state,
         inventory: {
           ...items,
-          [desiredItem.id]: { ...desiredItem, ...action.payload } 
+          [desiredItem.id]: { ...desiredItem, ...action.payload.data } 
         }
       }
 
