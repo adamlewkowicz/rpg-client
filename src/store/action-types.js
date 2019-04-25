@@ -8,5 +8,20 @@ export const CHANGE_LOCATION = 'CHANGE_LOCATION';
 export const REQUEST_LOCATION_CHANGE = 'REQUEST_LOCATION_CHANGE';
 export const LOAD_GAME = 'LOAD_GAME';
 
+/* Chat */
 export const SEND_MESSAGE = 'SEND_MESSAGE';
 export const RECEIVE_MESSAGE = 'RECEIVE_MESSAGE';
+
+/* Inventory */
+export const ITEM_ADD = 'ITEM_ADD';
+export const ITEM_UPDATE = 'ITEM_UPDATE';
+export const ITEM_REMOVE = 'ITEM_REMOVE';
+
+export const ITEM_PICKUP = 'ITEM_PICKUP';
+export const ITEM_DROP = 'ITEM_DROP';
+
+export const $_ITEM_ADD_DROPPED = '$_ITEM_ADD_DROPPED';
+export const $_ITEM_REMOVE_DROPPED = '$_ITEM_REMOVE_DROPPED';
+
+// export const $ITEM_ADD_DROPPED = '$ITEM_ADD_DROPPED';
+// export const $ITEM_REMOVE_DROPPED = '$ITEM_REMOVE_DROPPED';
