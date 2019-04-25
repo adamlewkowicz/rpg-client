@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { sendPrivateMessage, sendLocalMessage } from '../../store/actions/chat';
+import { dropItem } from '../../store/actions/inventory';
 
 class Triggers extends React.Component {
 
@@ -85,7 +86,11 @@ class Triggers extends React.Component {
           value={this.state.receiverId}
           onChange={e => this.setState({ receiverId: e.target.value })} 
         />
-  
+
+        <br />
+        <button onClick={() => this.props.dispatch(dropItem(this.state.message))}>
+          Drop item ({this.state.message})
+        </button>
       </>
     )
   }

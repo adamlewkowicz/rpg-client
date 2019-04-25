@@ -20,8 +20,8 @@ export const ITEM_REMOVE = 'ITEM_REMOVE';
 export const ITEM_PICKUP = 'ITEM_PICKUP';
 export const ITEM_DROP = 'ITEM_DROP';
 
-export const $_ITEM_ADD_DROPPED = '$_ITEM_ADD_DROPPED';
-export const $_ITEM_REMOVE_DROPPED = '$_ITEM_REMOVE_DROPPED';
+export const $_ITEM_DROPPED_ADD = '$_ITEM_DROPPED_ADD';
+export const $_ITEM_DROPPED_REMOVE = '$_ITEM_DROPPED_REMOVE';
 
 // export const $ITEM_ADD_DROPPED = '$ITEM_ADD_DROPPED';
 // export const $ITEM_REMOVE_DROPPED = '$ITEM_REMOVE_DROPPED';

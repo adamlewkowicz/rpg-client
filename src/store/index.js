@@ -5,7 +5,7 @@ import { socket } from '../io';
 import * as actionTypes from './action-types';
 import game from './reducers/game';
 import chat from './reducers/chat';
-import inventory from './reducers/inventory';
+import items from './reducers/items';
 
 
 const {
@@ -16,7 +16,7 @@ const {
 const reducers = combineReducers({
   game,
   chat,
-  inventory
+  items
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

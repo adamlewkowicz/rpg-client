@@ -1,7 +1,9 @@
 import {
   ITEM_ADD,
   ITEM_UPDATE,
-  ITEM_REMOVE
+  ITEM_REMOVE,
+
+  ITEM_DROP,
 } from '../action-types';
 
 export const moveItem = (itemId, position) => ({
@@ -17,7 +19,7 @@ export const pickupItem = (itemId) => ({
 });
 
 export const dropItem = (itemId) => ({
-  type: ITEM_REMOVE,
+  type: ITEM_DROP,
   payload: itemId,
   meta: { itemId }
 });

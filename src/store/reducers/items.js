@@ -5,19 +5,20 @@ import {
   ITEM_PICKUP,
   ITEM_UPDATE,
 
-  $_ITEM_ADD_DROPPED,
-  $_ITEM_REMOVE_DROPPED
+  $_ITEM_DROPPED_ADD,
+  $_ITEM_DROPPED_REMOVE
 } from '../action-types';
 import { normalize } from '../../utils';
 
 const initialState = {
   inventory: {},
   droppedItems: {},
+  dropped: {},
 
   inventoryLimit: null
 }
 
-const inventory = (state = initialState, action) => {
+const items = (state = initialState, action) => {
   switch(action.type) {
     case LOAD_GAME: return {
       ...state,
@@ -56,14 +57,14 @@ const inventory = (state = initialState, action) => {
         }
       }
     }
-    case $_ITEM_ADD_DROPPED: return {
+    case $_ITEM_DROPPED_ADD: return {
       ...state,
       droppedItems: {
         ...state.droppedItems,
         [action.payload.id]: action.payload
       }
     }
-    case $_ITEM_REMOVE_DROPPED: {
+    case $_ITEM_DROPPED_REMOVE: {
       const { [action.payload]: deleted, ...droppedItems } = state.droppedItems;
       return { ...state, droppedItems };
     }
@@ -71,4 +72,4 @@ const inventory = (state = initialState, action) => {
   }
 }
 
-export default inventory;
+export default items;
