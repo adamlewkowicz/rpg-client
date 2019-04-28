@@ -5,7 +5,9 @@ import {
   CHARACTER_UPDATE,
   CHANGE_LOCATION,
   REQUEST_LOCATION_CHANGE,
-  LOAD_GAME
+
+  $_LOAD_GAME,
+  $_CHARACTER_UPDATE,
 } from '../action-types';
 import { CHARACTER_STATUS } from '../consts';
 
@@ -26,7 +28,7 @@ const initialState = {
 
 const game = (state = initialState, action) => {
   switch(action.type) {
-    case LOAD_GAME: return {
+    case $_LOAD_GAME: return {
       ...state,
       location: action.payload.location,
       charId: action.payload.character.id,
@@ -57,18 +59,16 @@ const game = (state = initialState, action) => {
         status: STATUS.IDLE
       }
     }
-    case CHARACTER_UPDATE:
-      const charId = action.meta.charId || state.charId || 1;
-      return {
-        ...state,
-        characters: {
-          ...state.characters,
-          [charId]: {
-            ...state.characters[charId],
-            ...action.payload
-          }
+    case $_CHARACTER_UPDATE: return {
+      ...state,
+      characters: {
+        ...state.characters,
+        [action.meta.charId]: {
+          ...state.characters[action.meta.charId],
+          ...action.payload
         }
       }
+    }
     case CHARACTER_JOIN: return {
       ...state,
       characters: {

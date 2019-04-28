@@ -6,7 +6,9 @@ export const CHARACTER_LEAVE = 'CHARACTER_LEAVE';
 export const CHARACTER_JOIN = 'CHARACTER_JOIN';
 export const CHANGE_LOCATION = 'CHANGE_LOCATION';
 export const REQUEST_LOCATION_CHANGE = 'REQUEST_LOCATION_CHANGE';
-export const LOAD_GAME = 'LOAD_GAME';
+
+export const $_LOAD_GAME = '$_LOAD_GAME';
+export const $_CHARACTER_UPDATE = '$_CHARACTER_UPDATE';
 
 /* Chat */
 export const SEND_MESSAGE = 'SEND_MESSAGE';

@@ -9,9 +9,11 @@ import items from './reducers/items/index';
 
 
 const {
-  CHARACTER_JOIN, CHANGE_LOCATION, CHARACTER_UPDATE, LOAD_GAME,
+  CHARACTER_JOIN, CHANGE_LOCATION,
   CHARACTER_LEAVE, RECEIVE_MESSAGE,
-  $_ITEM_DROPPED_ADD, $_ITEM_DROPPED_REMOVE
+  $_ITEM_DROPPED_ADD, $_ITEM_DROPPED_REMOVE,
+  $_CHARACTER_UPDATE,
+  $_LOAD_GAME
 } = actionTypes;
 
 const reducers = combineReducers({
@@ -40,13 +42,13 @@ const handleAction = (action, propagate = false) => {
   });
 }
 
-socket.on(LOAD_GAME, handleAction);
+socket.on($_LOAD_GAME, handleAction);
 
 socket.on(CHARACTER_JOIN, handleAction);
 socket.on(CHARACTER_LEAVE, handleAction);
 socket.on(CHANGE_LOCATION, handleAction);
 
-socket.on(CHARACTER_UPDATE, handleAction);
+socket.on($_CHARACTER_UPDATE, handleAction);
 
 /* Chat */
 socket.on(RECEIVE_MESSAGE, handleAction);

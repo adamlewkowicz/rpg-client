@@ -1,5 +1,5 @@
 import {
-  LOAD_GAME,
+  $_LOAD_GAME,
 
   ITEM_DROP,
   ITEM_PICKUP,
@@ -19,7 +19,7 @@ export const initialState = {
 
 const items = (state = initialState, action) => {
   switch(action.type) {
-    case LOAD_GAME: return {
+    case $_LOAD_GAME: return {
       ...state,
       inventory: normalize(action.payload.inventory),
       inventoryLimit: 30
