@@ -32,8 +32,11 @@ const game = (state = initialState, action) => {
       ...state,
       location: action.payload.location,
       charId: action.payload.character.id,
-      character: action.payload.character,
-      characters: [...action.payload.characters, action.payload.character]
+      character: {
+        ...action.payload.character,
+        status: CHARACTER_STATUS.IDLE
+      },
+      characters: action.payload.characters
         .reduce((mergedChars, character) => ({
           ...mergedChars,
           [character.id]: {
@@ -57,6 +60,13 @@ const game = (state = initialState, action) => {
         location: location,
         characters: { [state.charId]: myCharacter, ...characters },
         status: STATUS.IDLE
+      }
+    }
+    case CHARACTER_UPDATE: return {
+      ...state,
+      character: {
+        ...state.character,
+        ...action.payload
       }
     }
     case $_CHARACTER_UPDATE: return {

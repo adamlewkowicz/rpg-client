@@ -20,9 +20,8 @@ class Triggers extends React.Component {
       }
       const key = movementKeys[event.keyCode];
 
-      const { charId, characters } = this.props.game;
-      const { [charId]: myCharacter = {} } = characters;
-      let { positionX = 0, positionY = 0 } = myCharacter;
+      const { character = {} } = this.props.game;
+      let { positionX = 0, positionY = 0, id: charId } = character;
 
       switch(key) {
         case 'w':
