@@ -27,3 +27,10 @@ export const $_ITEM_DROPPED_REMOVE = '$_ITEM_DROPPED_REMOVE';
 
 // export const $ITEM_ADD_DROPPED = '$ITEM_ADD_DROPPED';
 // export const $ITEM_REMOVE_DROPPED = '$ITEM_REMOVE_DROPPED';
+
+/* Battle */
+export const FIGHT_START = 'FIGHT_START';
+export const FIGHT_ACTION = 'FIGHT_ACTION';
+
+export const $_FIGHT_ACTION_RESPONSE = '$_FIGHT_ACTION_RESPONSE';
+export const $_FIGHT_FINISH = '$_FIGHT_FINISH';

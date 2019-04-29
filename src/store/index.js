@@ -3,9 +3,12 @@ import thunk from 'redux-thunk';
 import websocketMiddleware from './middleware/websockets';
 import { socket } from '../io';
 import * as actionTypes from './action-types';
+
 import game from './reducers/game';
 import chat from './reducers/chat';
 import items from './reducers/items/index';
+import location from './reducers/location';
+import battle from './reducers/battle';
 
 
 const {
@@ -19,7 +22,8 @@ const {
 const reducers = combineReducers({
   game,
   chat,
-  items
+  items,
+  location
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -34,6 +38,9 @@ export const store = createStore(
     )
   )
 );
+const socketActions = Object
+  .keys(actionTypes)
+  .filter(([typeName]) => typeName.startsWith('$'));
 
 const handleAction = (action, propagate = false) => {
   const io = !action.type.startsWith('$') // !action.type.startsWith('$') || propagate;
