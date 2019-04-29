@@ -20,8 +20,8 @@ class Triggers extends React.Component {
       }
       const key = movementKeys[event.keyCode];
 
-      const { character = {} } = this.props.game;
-      let { positionX = 0, positionY = 0, id: charId } = character;
+      const { data = {} } = this.props.character;
+      let { positionX = 0, positionY = 0, id: charId } = data;
 
       switch(key) {
         case 'w':
@@ -102,7 +102,7 @@ class Triggers extends React.Component {
 }
 
 const TriggersWithStore = connect(
-  ({ items, game }) => ({ items, game }),
+  ({ items, game, character }) => ({ items, game, character }),
   (dispatch) => ({
     increment: () => dispatch({ type: 'INC' }),
     dispatch
