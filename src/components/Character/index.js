@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import useImage from 'use-image';
-import { Stage, Layer, Image } from 'react-konva'; 
+import { Stage, Layer, Shape, Group, Image } from 'react-konva'; 
 import { connect, ReactReduxContext } from 'react-redux';
 import { mapDispatchToProps } from '../../store/mappers';
 
@@ -12,13 +12,29 @@ function useStore () {
 const Character = () => {
   const [characterImg] = useImage(process.env.REACT_APP_CHARACTER_IMG);
   const state = useStore();
+  const { game } = state;
+  const charWidth = 32;
+  const charHeight = 48;
+
+  const handleClip = (ctx) => {
+    ctx.rect(
+      0, 0,
+      charWidth, charHeight
+    );
+  }
 
   return (
-    <Image
-      image={characterImg}
-      width={48}
-      pixelRatio={1}
-    />
+    <Group
+      x={game.width / 2 - charWidth / 2}
+      y={game.height / 2 - charHeight / 2}
+      clipFunc={handleClip}
+    >
+      <Image
+        image={characterImg}
+        // clipFunc={handleClip}
+        // cropWidth={48}
+      />
+    </Group>
   )
 }
 

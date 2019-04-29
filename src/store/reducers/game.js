@@ -14,7 +14,9 @@ const STATUS = {
 }
 
 const initialState = {
-  status: STATUS.LOADING
+  status: STATUS.LOADING,
+  width: 512,
+  height: 512
 }
 
 const game = (state = initialState, action) => {
