@@ -3,14 +3,17 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "konva": "^3.2.5",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-konva": "^16.8.6",
     "react-redux": "^7.0.2",
     "react-scripts": "3.0.0",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
     "socket.io-client": "^2.2.0",
-    "styled-components": "^4.2.0"
+    "styled-components": "^4.2.0",
+    "use-image": "^1.0.3"
   },
   "scripts": {
     "start": "react-scripts start",

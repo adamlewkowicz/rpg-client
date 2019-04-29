@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import { store } from './store/index';
 
 import { Triggers } from './components/Triggers';
+import { Game } from './components/Game';
 import { socket } from './io';
 
 class App extends React.Component {
@@ -18,7 +19,8 @@ class App extends React.Component {
         <div className="App">
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
-            <Triggers />
+            <Game />
+            {/* <Triggers /> */}
           </header>
         </div>
       </Provider>
