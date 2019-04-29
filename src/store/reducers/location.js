@@ -31,8 +31,7 @@ const locationReducer = (state = initialState, action) => {
         }
       },
       characters: action.payload.characters
-        .slice(0, 2)
-        .filter(char => char.id !== action.payload.character.id)
+        // .slice(0, 2)
         .reduce((mergedChars, character) => ({
           ...mergedChars,
           [character.id]: {

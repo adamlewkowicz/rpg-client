@@ -33,13 +33,13 @@ const GameRenderer = () => {
         <LocationMap {...state} />
       </Layer>
       <Layer>
-        <Character
+        {/* <Character
           data={state.character.data}
           game={state.game}
           x={state.character.positionX}
           y={state.character.positionY}
           ownChar
-        />
+        /> */}
         {characters.map(character => (
           <Character
             key={character.id}

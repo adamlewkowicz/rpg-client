@@ -23,8 +23,8 @@ export const LocationMap = ({ character, game }) => {
   return (
     <animated.Image
       image={locationImg}
-      x={positionProps.mapX}
-      y={positionProps.mapY}
+      x={0}
+      y={0}
     />
   )
 }

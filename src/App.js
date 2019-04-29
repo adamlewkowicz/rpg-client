@@ -21,7 +21,7 @@ class App extends React.Component {
         <StoreContext.Provider value={store}>
           <div className="App">
             <header className="App-header">
-              <img src={logo} className="App-logo" alt="logo" />
+              {/* <img src={logo} className="App-logo" alt="logo" /> */}
               <Game />
               <Triggers />
             </header>
