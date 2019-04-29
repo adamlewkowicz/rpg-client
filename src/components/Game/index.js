@@ -2,28 +2,33 @@ import React, { useContext } from 'react';
 import useImage from 'use-image';
 import { Stage, Layer, Image } from 'react-konva';
 import { Provider, ReactReduxContext } from 'react-redux';
-import { store } from '../../store/index';
+// import { store } from '../../store/index';
+import { StoreContext } from 'redux-react-hook'
 
 import { Character } from '../Character';
+import { LocationMap } from '../LocationMap';
 
 export const Game = () => {
-  const store = useContext(ReactReduxContext);
-  const [locationImg] = useImage(process.env.REACT_APP_LOCATION_IMG);
-  
+  const store = useContext(StoreContext);
 
   return (
-  <Stage
-    width={512}
-    height={512}
-  >
-    <ReactReduxContext.Provider value={store}>
-      <Layer>
-        <Image image={locationImg} />
-      </Layer>
-      <Layer>
-        <Character />
-      </Layer>
-    </ReactReduxContext.Provider>
-  </Stage>
+    <StoreContext.Consumer>
+      {ww => (
+        <Stage
+          width={512}
+          height={512}
+        >
+          <StoreContext.Provider value={store}>
+            <Layer>
+              <LocationMap />
+            </Layer>
+            <Layer>
+              <Character />
+            </Layer>
+          </StoreContext.Provider>
+        </Stage>
+      )}
+    </StoreContext.Consumer>
+
   );
 }

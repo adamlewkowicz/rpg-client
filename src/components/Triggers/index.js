@@ -53,6 +53,7 @@ class Triggers extends React.Component {
   }
 
   render() {
+    return null;
     return (
       <>
         <button onClick={() => this.props.dispatch({

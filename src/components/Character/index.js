@@ -11,8 +11,8 @@ function useStore () {
 
 const Character = () => {
   const [characterImg] = useImage(process.env.REACT_APP_CHARACTER_IMG);
-  const state = useStore();
-  const { game } = state;
+  const state = {};
+  const { game = { width: 512, height: 512 } } = state;
   const charWidth = 32;
   const charHeight = 48;
 
@@ -22,6 +22,10 @@ const Character = () => {
       charWidth, charHeight
     );
   }
+
+  if (game.status === 'LOADING') return (
+    <div>Loading...</div>
+  );
 
   return (
     <Group

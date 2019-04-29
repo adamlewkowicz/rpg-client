@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import { Provider } from 'react-redux';
 import { store } from './store/index';
+import { StoreContext } from 'redux-react-hook';
+
 
 import { Triggers } from './components/Triggers';
 import { Game } from './components/Game';
@@ -16,13 +18,15 @@ class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        <div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo" />
-            <Game />
-            {/* <Triggers /> */}
-          </header>
-        </div>
+        <StoreContext.Provider value={store}>
+          <div className="App">
+            <header className="App-header">
+              <img src={logo} className="App-logo" alt="logo" />
+              <Game />
+              <Triggers />
+            </header>
+          </div>
+        </StoreContext.Provider>
       </Provider>
     );
   }
