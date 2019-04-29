@@ -6,9 +6,10 @@ import * as actionTypes from './action-types';
 
 import game from './reducers/game';
 import chat from './reducers/chat';
-import items from './reducers/items/index';
+import items from './reducers/items';
 import location from './reducers/location';
 import battle from './reducers/battle';
+import character from './reducers/character';
 
 
 const {
@@ -23,7 +24,8 @@ const reducers = combineReducers({
   game,
   chat,
   items,
-  location
+  location,
+  character
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

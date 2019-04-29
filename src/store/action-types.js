@@ -8,7 +8,10 @@ export const CHANGE_LOCATION = 'CHANGE_LOCATION';
 export const REQUEST_LOCATION_CHANGE = 'REQUEST_LOCATION_CHANGE';
 
 export const $_LOAD_GAME = '$_LOAD_GAME';
+
 export const $_CHARACTER_UPDATE = '$_CHARACTER_UPDATE';
+export const $_CHARACTER_JOIN = '$_CHARACTER_JOIN';
+export const $_CHARACTER_LEAVE = '$_CHARACTER_LEAVE';
 
 /* Chat */
 export const SEND_MESSAGE = 'SEND_MESSAGE';

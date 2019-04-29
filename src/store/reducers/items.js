@@ -7,8 +7,8 @@ import {
 
   $_ITEM_DROPPED_ADD,
   $_ITEM_DROPPED_REMOVE
-} from '../../action-types';
-import { normalize } from '../../../utils';
+} from '../action-types';
+import { normalize } from '../../utils';
 
 export const initialState = {
   inventory: {},

@@ -62,6 +62,7 @@ const game = (state = initialState, action) => {
         status: STATUS.IDLE
       }
     }
+    /*
     case CHARACTER_UPDATE: return {
       ...state,
       character: {
@@ -89,6 +90,7 @@ const game = (state = initialState, action) => {
     case CHARACTER_LEAVE: 
       const { [action.payload]: deleted, ...characters } = state.characters;
       return { ...state, characters };
+    */
     default: return state;
   }
 }
