@@ -8,6 +8,8 @@ import { MOB_STATUS, CHARACTER_STATUS } from '../consts';
 const initialState = {
   data: null,
   mobs: {},
+  width: 0,
+  height: 0,
 
   characters: {},
   droppedItems: {}
@@ -17,6 +19,8 @@ const locationReducer = (state = initialState, action) => {
   switch(action.type) {
     case $_LOAD_GAME: return {
       ...state,
+      width: 2048,
+      height: 3072,
       data: action.payload.location,
       mobs: {
         1: {
@@ -27,6 +31,8 @@ const locationReducer = (state = initialState, action) => {
         }
       },
       characters: action.payload.characters
+        .slice(0, 2)
+        .filter(char => char.id !== action.payload.character.id)
         .reduce((mergedChars, character) => ({
           ...mergedChars,
           [character.id]: {

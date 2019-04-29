@@ -11,37 +11,35 @@ const charHeight = 48;
 const gameWidth = 512;
 const gameHeight = 512;
 
-/*
-const positionProps = useSpring({
-  from: { x: 0, y: 0 },
-  to: { x, y },
-  config: { mass: 1, tension: 150, friction: 50 },
-});
-*/
+const handleClip = (ctx) => {
+  ctx.rect(
+    0, 0,
+    charWidth, charHeight
+  );
+}
+
 
 const Character = ({
   data,
   x = 0, y = 0,
   ownChar = false
 }) => {
-
-  const [characterImg] = useImage(process.env.REACT_APP_CHARACTER_IMG);
-  const handleClip = (ctx) => {
-    ctx.rect(
-      0, 0,
-      charWidth, charHeight
-    );
-  }
+  const [characterImg] = useImage(process.env[`REACT_APP_CHARACTER_IMG_${1}`]);
+  const positionProps = useSpring({
+    from: { x: 0, y: 0 },
+    to: { x, y },
+    config: { mass: 1, tension: 150, friction: 50 },
+  });
 
   if (!ownChar) {
     return  (
-      <Group
-        x={x * charWidth}
+      <animated.Group
+        x={positionProps.x.interpolate(v => v * charWidth)}
         y={y * charHeight}
         clipFunc={handleClip}
       >
-        <animated.Image image={characterImg} />
-      </Group>
+        <Image image={characterImg} />
+      </animated.Group>
     )
   }
 

@@ -34,6 +34,7 @@ const GameRenderer = () => {
       </Layer>
       <Layer>
         <Character
+          data={state.character.data}
           game={state.game}
           x={state.character.positionX}
           y={state.character.positionY}
@@ -41,6 +42,7 @@ const GameRenderer = () => {
         />
         {characters.map(character => (
           <Character
+            key={character.id}
             x={character.positionX}
             y={character.positionY}
             data={character}
