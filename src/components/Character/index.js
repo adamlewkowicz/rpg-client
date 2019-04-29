@@ -24,7 +24,7 @@ const Character = ({
   x = 0, y = 0,
   ownChar = false
 }) => {
-  const [characterImg] = useImage(process.env[`REACT_APP_CHARACTER_IMG_${1}`]);
+  const [characterImg] = useImage(process.env[`REACT_APP_CHARACTER_IMG_${data.id}`]);
   const positionProps = useSpring({
     from: { x: 0, y: 0 },
     to: { x, y },

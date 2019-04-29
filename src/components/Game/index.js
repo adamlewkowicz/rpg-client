@@ -4,6 +4,10 @@ import { Stage, Layer, Image } from 'react-konva';
 import { Provider, ReactReduxContext } from 'react-redux';
 // import { store } from '../../store/index';
 import { StoreContext, useMappedState } from 'redux-react-hook';
+import {
+  locationMapPosition,
+  characerPosition
+} from '../../store/selectors/location';
 
 import { Character } from '../Character';
 import { LocationMap } from '../LocationMap';
@@ -24,22 +28,29 @@ const GameRenderer = () => {
     return null;
   }
   
+  const { mapX, mapY, isCameraLocked } = locationMapPosition(state);
+  const { posX, posY } = characerPosition(state);
   const { charWidth, charHeight } = state.game;
   const characters = Object.values(state.location.characters);
 
   return (
     <>
       <Layer>
-        <LocationMap {...state} />
+        <LocationMap
+          mapX={mapX}
+          mapY={mapY}
+          {...state}
+        />
       </Layer>
       <Layer>
-        {/* <Character
+        <Character
           data={state.character.data}
           game={state.game}
           x={state.character.positionX}
           y={state.character.positionY}
+          isCameraLocked={isCameraLocked}
           ownChar
-        /> */}
+        />
         {characters.map(character => (
           <Character
             key={character.id}
@@ -47,6 +58,7 @@ const GameRenderer = () => {
             y={character.positionY}
             data={character}
             game={state.game}
+            isCameraLocked={isCameraLocked}
           />
         ))}
       </Layer>

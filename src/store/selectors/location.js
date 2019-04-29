@@ -39,7 +39,7 @@ export const locationMapPosition = createSelector(
     if (posY <= 0) {
       mapY = 0;
       isCameraLocked = true;
-    } else if (mapEndY >= posY) {
+    } else if (posY >= mapEndY) {
       mapY = mapEndY;
       isCameraLocked = true;
     }

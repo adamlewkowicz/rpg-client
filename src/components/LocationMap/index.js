@@ -5,11 +5,13 @@ import { Provider, ReactReduxContext } from 'react-redux';
 import { store } from '../../store/index';
 import { useMappedState } from 'redux-react-hook';
 import { useSpring, animated } from 'react-spring/konva';
+import { locationMapPosition } from '../../store/selectors/location';
 
 
 export const LocationMap = ({ character, game, location }) => {
   const [locationImg] = useImage(process.env.REACT_APP_LOCATION_IMG);
-  // const {  } = useMappedState(state => state);
+  const state = useMappedState(state => state);
+  const mapPosition = locationMapPosition(state);
 
   const mapX = character.data.positionX * game.charWidth * -1;
   const mapY = character.data.positionY * game.charHeight * -1;
@@ -52,14 +54,13 @@ export const LocationMap = ({ character, game, location }) => {
     return { x: mapX, y: mapY };
   }
   
-  console.log(cameraShouldFollow())
   const { x, y } = cameraShouldFollow();
 
   return (
     <animated.Image
       image={locationImg}
-      x={x * -1}
-      y={y * -1}
+      x={mapPosition.mapX * -1}
+      y={mapPosition.mapY * -1}
     />
   )
 }
