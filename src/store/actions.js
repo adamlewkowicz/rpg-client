@@ -8,5 +8,6 @@ import * as characterActions from './actions/character';
 export default {
   ...locationActions,
   ...itemsActions,
-  ...characterActions
+  ...characterActions,
+  ...battleActions
 }

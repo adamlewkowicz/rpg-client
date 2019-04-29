@@ -17,7 +17,9 @@ const {
   CHARACTER_LEAVE, RECEIVE_MESSAGE,
   $_ITEM_DROPPED_ADD, $_ITEM_DROPPED_REMOVE,
   $_CHARACTER_UPDATE,
-  $_LOAD_GAME
+  $_LOAD_GAME,
+  $_FIGHT_ACTION_RESULT,
+  $_FIGHT_FINISH
 } = actionTypes;
 
 const reducers = combineReducers({
@@ -25,7 +27,8 @@ const reducers = combineReducers({
   chat,
   items,
   location,
-  character
+  character,
+  battle
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -65,3 +68,7 @@ socket.on(RECEIVE_MESSAGE, handleAction);
 /* Items */
 socket.on($_ITEM_DROPPED_ADD, handleAction);
 socket.on($_ITEM_DROPPED_REMOVE, handleAction);
+
+/* Battle */
+socket.on($_FIGHT_ACTION_RESULT, handleAction);
+socket.on($_FIGHT_FINISH, handleAction);

@@ -1,18 +1,19 @@
 import {
-  updateCharacter
-} from './location'
-import { FIGHT_START } from '../action-types';
+  updateCharacter, updateCharacterStatus
+} from './character'
+import { FIGHT_START, CHARACTER_UPDATE, FIGHT_ACTION } from '../action-types';
 import { CHARACTER_STATUS } from '../consts';
 
-export const startFight = () => ({
-  type: FIGHT_START
+export const startFight = (mobId) => ({
+  type: FIGHT_START,
+  payload: mobId
 });
 
 export const startFightWithMob = (mobId) => (dispatch) => {
-  dispatch(updateCharacter({ status: CHARACTER_STATUS.FIGHTING }));
-  dispatch(startFight());
+  dispatch(updateCharacterStatus(CHARACTER_STATUS.FIGHTING))
+  dispatch(startFight(mobId));
 }
 
-export const fightAction = (type) => (dispatch) => {
-
-}
+export const makeFightAction = (type) => ({
+  type: FIGHT_ACTION
+});

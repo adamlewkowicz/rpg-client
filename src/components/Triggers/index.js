@@ -97,6 +97,14 @@ class Triggers extends React.Component {
         <button onClick={() => this.props.dispatch(moveItem(this.state.message, 41))}>
           Move item - next position ({this.state.message})
         </button>
+
+        <br />
+        <button onClick={() => this.props.actions.startFightWithMob(Number(this.state.message))}>
+          Start fight - mob id ({this.state.message})
+        </button>
+        <button onClick={() => this.props.actions.makeFightAction()}>
+          Fight - next action
+        </button>
       </>
     )
   }
