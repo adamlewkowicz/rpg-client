@@ -17,6 +17,41 @@ const Loading = ({ store, children }) => {
   return children;
 }
 
+const GameRenderer = () => {
+  const state = useMappedState(state => state);
+
+  if (state.game.status === 'LOADING') {
+    return null;
+  }
+  
+  const { charWidth, charHeight } = state.game;
+  const characters = Object.values(state.location.characters);
+
+  return (
+    <>
+      <Layer>
+        <LocationMap {...state} />
+      </Layer>
+      <Layer>
+        <Character
+          game={state.game}
+          x={state.character.positionX}
+          y={state.character.positionY}
+          ownChar
+        />
+        {characters.map(character => (
+          <Character
+            x={character.positionX}
+            y={character.positionY}
+            data={character}
+            game={state.game}
+          />
+        ))}
+      </Layer>
+    </>
+  )
+}
+
 export const Game = () => {
   const store = useContext(StoreContext);
 
@@ -28,14 +63,7 @@ export const Game = () => {
           height={512}
         > 
           <StoreContext.Provider value={store}>
-            <Loading>
-              <Layer>
-                <LocationMap />
-              </Layer>
-              <Layer>
-                <Character />
-              </Layer>
-            </Loading>
+            <GameRenderer />
           </StoreContext.Provider>
         </Stage>
       )}

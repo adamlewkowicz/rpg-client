@@ -7,9 +7,9 @@ import { useMappedState } from 'redux-react-hook';
 import { useSpring, animated } from 'react-spring/konva';
 
 
-export const LocationMap = () => {
+export const LocationMap = ({ character, game }) => {
   const [locationImg] = useImage(process.env.REACT_APP_LOCATION_IMG);
-  const { character, game } = useMappedState(state => state);
+  // const {  } = useMappedState(state => state);
 
   const mapX = character.data.positionX * game.charWidth * -1;
   const mapY = character.data.positionY * game.charHeight * -1;
