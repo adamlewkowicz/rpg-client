@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { sendPrivateMessage, sendLocalMessage } from '../../store/actions/chat';
 import { dropItem, pickupItem, moveItem } from '../../store/actions/items';
+import { mapDispatchToProps } from '../../store/mappers';
 
 class Triggers extends React.Component {
 
@@ -103,10 +104,7 @@ class Triggers extends React.Component {
 
 const TriggersWithStore = connect(
   ({ items, game, character }) => ({ items, game, character }),
-  (dispatch) => ({
-    increment: () => dispatch({ type: 'INC' }),
-    dispatch
-  })
+  mapDispatchToProps
 )(Triggers);
 
 export { TriggersWithStore as Triggers };
