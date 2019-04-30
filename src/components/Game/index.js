@@ -1,12 +1,13 @@
 import React, { useContext } from 'react';
 import useImage from 'use-image';
-import { Stage, Layer, Image } from 'react-konva';
+import { Stage, Layer, Image, Text, TextPath } from 'react-konva';
 import { Provider, ReactReduxContext } from 'react-redux';
 // import { store } from '../../store/index';
 import { StoreContext, useMappedState } from 'redux-react-hook';
 import {
   locationMapPosition,
-  characerPosition
+  characerPosition,
+  characterCords
 } from '../../store/selectors/location';
 
 import { Character } from '../Character';
@@ -28,8 +29,9 @@ const GameRenderer = () => {
     return null;
   }
   
-  const { mapX, mapY, isCameraLocked } = locationMapPosition(state);
   const { posX, posY } = characerPosition(state);
+  const { x, y } = characterCords(state);
+  const { mapX, mapY, isCameraLocked } = locationMapPosition(state);
   const { charWidth, charHeight } = state.game;
   const characters = Object.values(state.location.characters);
 
@@ -43,6 +45,19 @@ const GameRenderer = () => {
         />
       </Layer>
       <Layer>
+        <Text
+          text={`${x} - ${y}`}
+          fill="#fff"
+          fontSize={16}
+          fontStyle="bold"
+        />
+        <Text
+          x={100}
+          fontSize={14}
+          fontStyle="bold"
+          text={'ID: ' + state.character.data.id}
+          fill="#fff"
+        />
         <Character
           data={state.character.data}
           game={state.game}
