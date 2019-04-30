@@ -52,6 +52,13 @@ const GameRenderer = () => {
           fontStyle="bold"
         />
         <Text
+          text={`${posX} - ${posY}`}
+          fill="#fff"
+          fontSize={16}
+          fontStyle="bold"
+          y={30}
+        />
+        <Text
           x={100}
           fontSize={14}
           fontStyle="bold"
