@@ -31,7 +31,7 @@ const GameRenderer = () => {
   
   const { posX, posY } = characerPosition(state);
   const { x, y } = characterCords(state);
-  const { mapX, mapY, isCameraLocked } = locationMapPosition(state);
+  const { mapX, mapY, isCameraLocked, isXLocked, isYLocked } = locationMapPosition(state);
   const { charWidth, charHeight } = state.game;
   const characters = Object.values(state.location.characters);
 
@@ -41,6 +41,7 @@ const GameRenderer = () => {
         <LocationMap
           mapX={mapX}
           mapY={mapY}
+          isCameraLocked={isCameraLocked}
           {...state}
         />
       </Layer>
@@ -70,7 +71,10 @@ const GameRenderer = () => {
           game={state.game}
           x={state.character.positionX}
           y={state.character.positionY}
-          isCameraLocked={isCameraLocked}
+          posX={posX}
+          posY={posY}
+          isXLocked={isXLocked}
+          isYLocked={isYLocked}
           ownChar
         />
         {characters.map(character => (
@@ -95,8 +99,8 @@ export const Game = () => {
     <StoreContext.Consumer>
       {store => (
         <Stage
-          width={512}
-          height={512}
+          width={544}
+          height={544}
         > 
           <StoreContext.Provider value={store}>
             <GameRenderer />

@@ -5,6 +5,11 @@ export const characterCords = (state) => ({
   y: state.character.data.positionY
 });
 
+export const gameWindowSize = (state) => ({
+  width: state.game.width,
+  height: state.game.height
+});
+
 export const characerPosition = createSelector(
   characterCords,
   ({ x, y }) => ({
@@ -22,28 +27,35 @@ export const locationMapEnds = (state) => ({
 export const locationMapPosition = createSelector(
   characerPosition,
   locationMapEnds,
-  ({ posX, posY }, { mapEndX, mapEndY }) => {
+  gameWindowSize,
+  ({ posX, posY }, { mapEndX, mapEndY }, { width, height }) => {
 
     let isCameraLocked = false;
-    let mapX = posX;
-    let mapY = posY;
+    let isXLocked = false;
+    let isYLocked = false;
 
-    if (posX <= 0) {
+    const halfViewWidth = (width - 32 /* Char width */) / 2;
+    const halfHeightWidth = (height - 48) / 2;
+
+    let mapX = posX - halfViewWidth;
+    let mapY = posY - halfHeightWidth;
+
+    if (posX <= halfViewWidth) {
       mapX = 0;
-      isCameraLocked = true;
+      isXLocked = true;
     } else if (posX >= mapEndX) {
       mapX = mapEndX;
-      isCameraLocked = true;
+      isXLocked = true;
     }
 
-    if (posY <= 0) {
+    if (posY <= halfHeightWidth) {
       mapY = 0;
-      isCameraLocked = true;
+      isYLocked = true;
     } else if (posY >= mapEndY) {
       mapY = mapEndY;
-      isCameraLocked = true;
+      isYLocked = true;
     }
 
-    return { mapX, mapY, isCameraLocked };
+    return { mapX, mapY, isCameraLocked, isXLocked, isYLocked };
   }
 );

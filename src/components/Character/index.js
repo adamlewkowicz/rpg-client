@@ -22,7 +22,9 @@ const handleClip = (ctx) => {
 const Character = ({
   data,
   x = 0, y = 0,
-  ownChar = false
+  ownChar = false,
+  posX, posY,
+  isXLocked, isYLocked,
 }) => {
   const [characterImg] = useImage(process.env[`REACT_APP_CHARACTER_IMG_${data.id}`]);
   const positionProps = useSpring({
@@ -45,8 +47,8 @@ const Character = ({
 
   return (
     <Group
-      x={gameWidth / 2 - charWidth / 2}
-      y={gameHeight / 2 - charHeight / 2}
+      x={isXLocked ? posX : (544 - 32) / 2}
+      y={isYLocked ? posY : (544 - 32) / 2}
       clipFunc={handleClip}
     >
       <Image image={characterImg} />

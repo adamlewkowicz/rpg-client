@@ -22,40 +22,6 @@ export const LocationMap = ({ character, game, location }) => {
     config: { mass: 1, tension: 150, friction: 50 }
   });
 
-  const cameraShouldFollow = () => {
-    /* X axis */
-    const { positionX: x, positionY: y } = character.data;
-
-    const charMapPosX = x * game.charWidth;
-    const charMapPosY = y * game.charHeight;
-
-    const mapEndLeftX = game.width / 2;
-    const mapEndRightX = location.width - game.width;
-
-    const mapEndTopY = game.height / 2;
-    const mapEndBottomY = location.height - game.height;
-
-    let mapX = charMapPosX;
-    let mapY = charMapPosY;
-
-  
-    if (mapX <= 0) {
-      mapX = 0;
-    } else if (charMapPosX >= mapEndRightX) {
-      mapX = mapEndRightX;
-    }
-
-    if (mapY  <= 0) {
-      mapY = 0;
-    } else if (mapY >= mapEndBottomY) {
-      mapY = mapEndBottomY;
-    }
-
-    return { x: mapX, y: mapY };
-  }
-  
-  const { x, y } = cameraShouldFollow();
-
   return (
     <animated.Image
       image={locationImg}
