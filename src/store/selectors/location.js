@@ -35,10 +35,10 @@ export const locationMapPosition = createSelector(
     let isYLocked = false;
 
     const halfViewWidth = (width - 32 /* Char width */) / 2;
-    const halfHeightWidth = (height - 48) / 2;
+    const halfViewHeight = (height - 45) / 2;
 
     let mapX = posX - halfViewWidth;
-    let mapY = posY - halfHeightWidth;
+    let mapY = posY - halfViewHeight;
 
     if (posX <= halfViewWidth) {
       mapX = 0;
@@ -48,11 +48,11 @@ export const locationMapPosition = createSelector(
       isXLocked = true;
     }
 
-    if (posY <= halfHeightWidth) {
+    if (posY <= halfViewHeight) {
       mapY = 0;
       isYLocked = true;
-    } else if (posY >= mapEndY) {
-      mapY = mapEndY;
+    } else if (posY >= 2784) {
+      mapY = 2488;
       isYLocked = true;
     }
 

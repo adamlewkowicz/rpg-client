@@ -16,7 +16,7 @@ const STATUS = {
 const initialState = {
   status: STATUS.LOADING,
   width: 544,
-  height: 544,
+  height: 528,
   charWidth: 32,
   charHeight: 48
 }

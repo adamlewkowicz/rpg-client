@@ -100,7 +100,7 @@ export const Game = () => {
       {store => (
         <Stage
           width={544}
-          height={544}
+          height={528}
         > 
           <StoreContext.Provider value={store}>
             <GameRenderer />
