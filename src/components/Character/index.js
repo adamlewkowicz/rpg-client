@@ -25,6 +25,7 @@ const Character = ({
   ownChar = false,
   posX, posY,
   isXLocked, isYLocked,
+  charPosX, charPosY,
 }) => {
   const [characterImg] = useImage(process.env[`REACT_APP_CHARACTER_IMG_${data.id}`]);
   const positionProps = useSpring({
@@ -47,8 +48,10 @@ const Character = ({
 
   return (
     <Group
-      x={isXLocked ? posX : (544 - 32) / 2}
-      y={isYLocked ? posY : (544 - 32) / 2}
+      x={charPosX}
+      // x={isXLocked ? posX : (544 - 32) / 2}
+      y={charPosY}
+      // y={isYLocked ? posY : (544 - 32) / 2}
       clipFunc={handleClip}
     >
       <Image image={characterImg} />

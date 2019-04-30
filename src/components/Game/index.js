@@ -31,7 +31,7 @@ const GameRenderer = () => {
   
   const { posX, posY } = characerPosition(state);
   const { x, y } = characterCords(state);
-  const { mapX, mapY, isCameraLocked, isXLocked, isYLocked } = locationMapPosition(state);
+  const { mapX, mapY, isCameraLocked, isXLocked, isYLocked, charPosX, charPosY } = locationMapPosition(state);
   const { charWidth, charHeight } = state.game;
   const characters = Object.values(state.location.characters);
 
@@ -75,6 +75,8 @@ const GameRenderer = () => {
           posY={posY}
           isXLocked={isXLocked}
           isYLocked={isYLocked}
+          charPosX={charPosX}
+          charPosY={charPosY}
           ownChar
         />
         {characters.map(character => (

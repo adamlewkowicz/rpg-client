@@ -35,27 +35,39 @@ export const locationMapPosition = createSelector(
     let isYLocked = false;
 
     const halfViewWidth = (width - 32 /* Char width */) / 2;
-    const halfViewHeight = (height - 45) / 2;
+    const halfViewHeight = (height - 48) / 2;
 
     let mapX = posX - halfViewWidth;
     let mapY = posY - halfViewHeight;
 
+    /* V2 */
+    let charPosX = 256 /* Center */;
+    let charPosY = 240 /* Center */;
+
     if (posX <= halfViewWidth) {
       mapX = 0;
+      charPosX = posX - mapX;
       isXLocked = true;
-    } else if (posX >= mapEndX) {
+    } else if (posX >= 2048 - halfViewWidth) {
       mapX = mapEndX;
+      charPosX = posX - mapX;
       isXLocked = true;
     }
 
-    if (posY <= halfViewHeight) {
+    if (posY <= 240) {
       mapY = 0;
+      charPosY = posY - mapY;
       isYLocked = true;
-    } else if (posY >= 2784) {
-      mapY = 2488;
+    } else if (posY >= 3072 - halfViewHeight) {
+      mapY = 3072 - 528;
+      charPosY = posY - mapY;
       isYLocked = true;
     }
 
-    return { mapX, mapY, isCameraLocked, isXLocked, isYLocked };
+    return {
+      mapX, mapY, isCameraLocked,
+      isXLocked, isYLocked,
+      charPosX, charPosY
+    };
   }
 );
