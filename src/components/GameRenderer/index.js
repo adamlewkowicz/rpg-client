@@ -27,6 +27,7 @@ class GameRenderer extends React.Component {
 
     this.location = null;
     this.characers = [];
+    this.ownCharacter = null;
   }
 
   componentDidMount() {
@@ -42,8 +43,19 @@ class GameRenderer extends React.Component {
       this.props.game.status === 'IDLE' &&
       this.props.character.data
     ) {
+      const { positionX: x, positionY: y } = this.props.character.data;
+
       this.outfitImage = new Image();
       this.outfitImage.src = process.env[`REACT_APP_CHARACTER_IMG_${this.props.character.data.id}`];
+
+      this.ownCharacter = new Character(this.ctx, {
+        x, y,
+        image: this.outfitImage,
+        gameWidth: this.props.game.width,
+        gameHeight: this.props.game.height,
+        locationWidth: this.props.location.width,
+        locationHeight: this.props.location.height
+      });
       this.setupGame();
     }
   }
@@ -81,16 +93,26 @@ class GameRenderer extends React.Component {
     const { positionX: x, positionY: y } = this.props.character.data;
     const { charWidth, charHeight } = this.props.game;
     const { characters } = this.props.selectors;
+    const { width: gameWidth, height: gameHeight } = this.ctx.canvas;
+    const { mapX, mapY, charPosX, charPosY } = this.props.selectors.locationMapPosition;
 
     const posX = x * charWidth;
     const posY = y * charHeight;
     
 
     /* I - location */
-    this.location.render(x, y);
+    this.ctx.drawImage(this.locationImage,
+      mapX, mapY,
+      gameWidth, gameHeight,
+      0, 0,
+      gameWidth, gameHeight
+    );
+    
+    // this.location.render(x, y);
 
     /* II - relative objects */
     this.ctx.save();
+    /* Translate doesn't work (object moves) when locking mapX and mapY  */
     this.ctx.translate(-posX, -posY);
 
     for (let i = 0; i < characters.length; i++) {
@@ -102,12 +124,13 @@ class GameRenderer extends React.Component {
 
     /* III - absolute (own character) and camera */
 
-    this.ctx.drawImage(this.outfitImage,
-      0, 0,
-      32, 48,
-      0, 0,
-      32, 48
-    );
+    // this.ownCharacter.render(x, y);
+    // this.ctx.drawImage(this.outfitImage,
+    //   0, 0,
+    //   32, 48,
+    //   charPosX, charPosY,
+    //   32, 48
+    // );
     
     requestAnimationFrame(this.renderGame);
   }
@@ -162,7 +185,7 @@ const GameRendererWithStore = connect(
     ...state,
     selectors: {
       characters: characters(state),
-      // locationMapPosition: locationMapPosition(state)
+      locationMapPosition: locationMapPosition(state)
     }
   }),
   mapDispatchToProps

@@ -4,7 +4,7 @@ import {
 import { normalize } from '../../utils';
 
 const initialState = {
-  data: null,
+  data: {},
   inventory: {},
   inventorySize: null,
 
