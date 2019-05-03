@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { mapDispatchToProps } from '../../store/mappers';
 import { Location } from '../../engine/Location';
 import { Character } from '../../engine/Character';
-import { characters } from '../../store/selectors/location';
+import { characters, locationMapPosition } from '../../store/selectors/location';
 
 class PureCanvas extends React.Component {
   shouldComponentUpdate() {
@@ -23,6 +23,7 @@ class GameRenderer extends React.Component {
     this.ctx = null;
 
     this.locationImage = null;
+    this.outfitImage = null;
 
     this.location = null;
     this.characers = [];
@@ -33,11 +34,16 @@ class GameRenderer extends React.Component {
 
     this.locationImage = new Image();
     this.locationImage.src = process.env.REACT_APP_LOCATION_IMG;
-    // this.locationImage.onload = () => this.setState({ isMapLoaded: true });
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.game.status === 'LOADING' && this.props.game.status === 'IDLE') {
+    if (
+      prevProps.game.status === 'LOADING' &&
+      this.props.game.status === 'IDLE' &&
+      this.props.character.data
+    ) {
+      this.outfitImage = new Image();
+      this.outfitImage.src = process.env[`REACT_APP_CHARACTER_IMG_${this.props.character.data.id}`];
       this.setupGame();
     }
   }
@@ -74,11 +80,11 @@ class GameRenderer extends React.Component {
   renderGame = () => {
     const { positionX: x, positionY: y } = this.props.character.data;
     const { charWidth, charHeight } = this.props.game;
+    const { characters } = this.props.selectors;
+
     const posX = x * charWidth;
     const posY = y * charHeight;
-    const { characters } = this.props.selectors;
     
-
 
     /* I - location */
     this.location.render(x, y);
@@ -95,6 +101,13 @@ class GameRenderer extends React.Component {
     this.ctx.restore();
 
     /* III - absolute (own character) and camera */
+
+    this.ctx.drawImage(this.outfitImage,
+      0, 0,
+      32, 48,
+      0, 0,
+      32, 48
+    );
     
     requestAnimationFrame(this.renderGame);
   }
@@ -148,7 +161,8 @@ const GameRendererWithStore = connect(
   (state) => ({
     ...state,
     selectors: {
-      characters: characters(state)
+      characters: characters(state),
+      // locationMapPosition: locationMapPosition(state)
     }
   }),
   mapDispatchToProps

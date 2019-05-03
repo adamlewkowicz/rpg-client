@@ -9,7 +9,7 @@ import { StoreContext } from 'redux-react-hook';
 import { Triggers } from './components/Triggers';
 import { Game } from './components/Game';
 import { GameRenderer } from './components/GameRenderer';
-import { socket } from './io';
+import { Loading } from './components/Loading';
 
 class App extends React.Component {
 
@@ -24,7 +24,9 @@ class App extends React.Component {
             <header className="App-header">
               {/* <img src={logo} className="App-logo" alt="logo" /> */}
               <Game />
-              <GameRenderer />
+              <Loading
+                children={<GameRenderer />}
+              />
               <Triggers />
             </header>
           </div>

@@ -52,7 +52,7 @@ class Triggers extends React.Component {
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown');
+    // document.removeEventListener('keydown');
   }
 
   render() {
