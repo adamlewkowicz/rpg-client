@@ -1,6 +1,19 @@
 import { createSelector } from 'reselect'
 
 export const charactersSelector = state => state.location.characters;
+export const mobsSelector = state => state.location.mobs;
+export const npcsSelector = state => state.location.npcs;
+export const collisionsSelector = state => state.location.collisions;
+
+export const mobsArray = createSelector(
+  mobsSelector,
+  mobs => Object.values(mobs)
+);
+
+export const npcsArray = createSelector(
+  npcsSelector,
+  npcs => Object.values(npcs)
+);
 
 export const characters = createSelector(
   charactersSelector,
@@ -77,5 +90,29 @@ export const locationMapPosition = createSelector(
       charPosX, charPosY,
       halfViewWidth,
     };
+  }
+);
+
+export const dynamicCollisions = createSelector(
+  collisionsSelector,
+  mobsArray,
+  (collisions, mobs) => {
+    const collisionsCopy = [...collisions];
+    
+    for (let mob of mobs) {
+      collisionsCopy[mob.x][mob.y] = 1;
+
+      /*
+        Alternative 
+
+      collisionsCopy[mob.x][mob.y] = {
+        type: 'MOB',
+        id: mob.id
+        data: mob ?
+      }
+      */
+    }
+
+    return collisionsCopy;
   }
 );

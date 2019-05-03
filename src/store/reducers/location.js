@@ -10,14 +10,18 @@ import {
 
 const initialState = {
   data: null,
-  mobs: {},
   width: 0,
   height: 0,
   xRange: 0,
   yRange: 0, 
 
+  mobs: {},
+  npcs: {},
   characters: {},
-  droppedItems: {}
+
+  droppedItems: {},
+
+  collisions: []
 }
 
 const locationReducer = (state = initialState, action) => {
@@ -34,6 +38,8 @@ const locationReducer = (state = initialState, action) => {
           name: 'Eagle',
           level: 12,
           status: MOB_STATUS.IDLE,
+          x: 3,
+          y: 5,
           type: { id: 1, damage: 12 }
         }
       },
@@ -45,7 +51,18 @@ const locationReducer = (state = initialState, action) => {
             ...character,
             status: CHARACTER_STATUS.IDLE
           }
-        }), {})
+        }), {}),
+      collisions: [
+        ...action.payload.collisions,
+        // ...action.payload.npcs.reduce((merged, npc) => ({
+        //   ...merged,
+        //   [npc.x]: npc.y
+        // }), {}),
+        // ...action.payload.mobs.reduce((merged, mob) => ({
+        //   ...merged,
+        //   [mob.x]: mob.y
+        // }), {})
+      ]
     }
     case $_CHARACTER_UPDATE: return {
       ...state,
