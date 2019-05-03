@@ -25,3 +25,6 @@ export const FIGHT_ACTION_TYPE = {
   BASIC_ATTACK: 'BASIC_ATTACK',
   USE_ABILITY: 'USE_ABILITY'
 }
+
+export const CHARACTER_WIDTH = 32;
+export const CHARACTER_HEIGHT = 48;

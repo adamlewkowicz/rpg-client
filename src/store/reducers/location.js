@@ -3,13 +3,18 @@ import {
   $_CHARACTER_JOIN, $_CHARACTER_LEAVE,
   $_ITEM_DROPPED_ADD, $_ITEM_DROPPED_REMOVE
 } from '../action-types';
-import { MOB_STATUS, CHARACTER_STATUS } from '../consts';
+import {
+  MOB_STATUS, CHARACTER_STATUS,
+  CHARACTER_WIDTH, CHARACTER_HEIGHT
+} from '../consts';
 
 const initialState = {
   data: null,
   mobs: {},
   width: 0,
   height: 0,
+  xRange: 0,
+  yRange: 0, 
 
   characters: {},
   droppedItems: {}
@@ -21,6 +26,8 @@ const locationReducer = (state = initialState, action) => {
       ...state,
       width: 2048,
       height: 3072,
+      xRange: 2048 / CHARACTER_WIDTH,
+      yRange: 3072 / CHARACTER_HEIGHT,
       data: action.payload.location,
       mobs: {
         1: {

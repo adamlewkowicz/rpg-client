@@ -99,6 +99,39 @@ class GameRenderer extends React.Component {
     requestAnimationFrame(this.renderGame);
   }
 
+  handleMovement = (event) => {
+    const keyPressed = {
+      87: 'w',
+      65: 'a',
+      83: 's',
+      68: 'd'
+    }[event.keyCode];
+
+    let { positionX = 0, positionY = 0 } = this.props.characer.data;
+
+    switch(keyPressed) {
+      case 'w':
+        positionY--;
+        break;
+      case 'a':
+        positionX--;
+        break;
+      case 's':
+        positionY++;
+        break;
+      case 'd':
+        positionX++;
+        break;
+      default: return;
+    }
+
+    this.props.dispatch({
+      type: 'CHARACTER_UPDATE',
+      payload: { positionX, positionY },
+      meta: { keyPressed }
+    });
+  }
+
   render() {
     return (
       <canvas
