@@ -1,5 +1,12 @@
 import { createSelector } from 'reselect'
 
+export const charactersSelector = state => state.location.characters;
+
+export const characters = createSelector(
+  charactersSelector,
+  (characters) => Object.values(characters)
+);
+
 export const characterCords = (state) => ({
   x: state.character.data.positionX,
   y: state.character.data.positionY

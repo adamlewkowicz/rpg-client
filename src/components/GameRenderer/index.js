@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { mapDispatchToProps } from '../../store/mappers';
 import { Location } from '../../engine/Location';
+import { Character } from '../../engine/Character';
+import { characters } from '../../store/selectors/location';
 
 class PureCanvas extends React.Component {
   shouldComponentUpdate() {
@@ -23,6 +25,7 @@ class GameRenderer extends React.Component {
     this.locationImage = null;
 
     this.location = null;
+    this.characers = [];
   }
 
   componentDidMount() {
@@ -42,6 +45,8 @@ class GameRenderer extends React.Component {
   setupGame = () => {
     const { positionX: x, positionY: y } = this.props.character.data;
     const { charWidth, charHeight } = this.props.game;
+    const { characters } = this.props.selectors;
+    const { ctx } = this;
 
     this.location = new Location(this.ctx, {
       x, y,
@@ -50,15 +55,46 @@ class GameRenderer extends React.Component {
       charHeight
     });
 
-    console.log(this.location)
+    this.characers = characters.map(character => {
+      const image = new Image();
+      image.src = process.env[`REACT_APP_CHARACTER_IMG_${character.id}`];
+
+      return new Character(this.ctx, {
+        x: character.positionX,
+        y: character.positionX,
+        image,
+        width: charWidth,
+        height: charHeight
+      });
+    });
+
     this.renderGame();
   }
 
   renderGame = () => {
     const { positionX: x, positionY: y } = this.props.character.data;
-    // const { width: gameWidth, height: gameHeight } = this.props.game;
+    const { charWidth, charHeight } = this.props.game;
+    const posX = x * charWidth;
+    const posY = y * charHeight;
+    const { characters } = this.props.selectors;
+    
 
+
+    /* I - location */
     this.location.render(x, y);
+
+    /* II - relative objects */
+    this.ctx.save();
+    this.ctx.translate(-posX, -posY);
+
+    for (let i = 0; i < characters.length; i++) {
+      const character = characters[i];
+      this.characers[i].render(character.positionX, character.positionY);
+    }
+
+    this.ctx.restore();
+
+    /* III - absolute (own character) and camera */
     
     requestAnimationFrame(this.renderGame);
   }
@@ -76,7 +112,12 @@ class GameRenderer extends React.Component {
 }
 
 const GameRendererWithStore = connect(
-  (state) => state,
+  (state) => ({
+    ...state,
+    selectors: {
+      characters: characters(state)
+    }
+  }),
   mapDispatchToProps
 )(GameRenderer);
 
