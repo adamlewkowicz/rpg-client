@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { mapDispatchToProps } from '../../store/mappers';
+import { Location } from '../../engine/Location';
 
 class PureCanvas extends React.Component {
   shouldComponentUpdate() {
@@ -10,12 +11,18 @@ class PureCanvas extends React.Component {
 
 class GameRenderer extends React.Component {
   
+  state = {
+    isLoaded: false
+  }
+
   constructor(props) {
     super(props);
     this.canvas = React.createRef();
     this.ctx = null;
 
     this.locationImage = null;
+
+    this.location = null;
   }
 
   componentDidMount() {
@@ -23,19 +30,37 @@ class GameRenderer extends React.Component {
 
     this.locationImage = new Image();
     this.locationImage.src = process.env.REACT_APP_LOCATION_IMG;
-    this.locationImage.onload = this.draw;
+    // this.locationImage.onload = () => this.setState({ isMapLoaded: true });
   }
 
-  draw = () => {
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.game.status === 'LOADING' && this.props.game.status === 'IDLE') {
+      this.setupGame();
+    }
+  }
 
-    this.ctx.drawImage(this.locationImage,
-      0, 0,
-      512, 512,
-      0, 0,
-      512, 512
-    );
+  setupGame = () => {
+    const { positionX: x, positionY: y } = this.props.character.data;
+    const { charWidth, charHeight } = this.props.game;
+
+    this.location = new Location(this.ctx, {
+      x, y,
+      image: this.locationImage,
+      charWidth,
+      charHeight
+    });
+
+    console.log(this.location)
+    this.renderGame();
+  }
+
+  renderGame = () => {
+    const { positionX: x, positionY: y } = this.props.character.data;
+    // const { width: gameWidth, height: gameHeight } = this.props.game;
+
+    this.location.render(x, y);
     
-    requestAnimationFrame(this.draw);
+    requestAnimationFrame(this.renderGame);
   }
 
   render() {
