@@ -74,7 +74,8 @@ export const locationMapPosition = createSelector(
     return {
       mapX, mapY, isCameraLocked,
       isXLocked, isYLocked,
-      charPosX, charPosY
+      charPosX, charPosY,
+      halfViewWidth,
     };
   }
 );

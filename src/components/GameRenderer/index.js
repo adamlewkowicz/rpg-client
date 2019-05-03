@@ -94,7 +94,10 @@ class GameRenderer extends React.Component {
     const { charWidth, charHeight } = this.props.game;
     const { characters } = this.props.selectors;
     const { width: gameWidth, height: gameHeight } = this.ctx.canvas;
-    const { mapX, mapY, charPosX, charPosY } = this.props.selectors.locationMapPosition;
+    const {
+      mapX, mapY, charPosX, charPosY,
+      isXLocked, isYLocked
+    } = this.props.selectors.locationMapPosition;
 
     const posX = x * charWidth;
     const posY = y * charHeight;
@@ -112,8 +115,10 @@ class GameRenderer extends React.Component {
 
     /* II - relative objects */
     this.ctx.save();
-    /* Translate doesn't work (object moves) when locking mapX and mapY  */
-    this.ctx.translate(-posX, -posY);
+    this.ctx.translate(
+      isXLocked ? 0 : -mapX,
+      isYLocked ? 0 : -mapY
+    );
 
     for (let i = 0; i < characters.length; i++) {
       const character = characters[i];
@@ -125,12 +130,12 @@ class GameRenderer extends React.Component {
     /* III - absolute (own character) and camera */
 
     // this.ownCharacter.render(x, y);
-    // this.ctx.drawImage(this.outfitImage,
-    //   0, 0,
-    //   32, 48,
-    //   charPosX, charPosY,
-    //   32, 48
-    // );
+    this.ctx.drawImage(this.outfitImage,
+      0, 0,
+      32, 48,
+      charPosX, charPosY,
+      32, 48
+    );
     
     requestAnimationFrame(this.renderGame);
   }
