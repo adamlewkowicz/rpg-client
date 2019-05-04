@@ -51,6 +51,14 @@ const locationReducer = (state = initialState, action) => {
           type: { id: 1, damage: 12 }
         }
       },
+      npcs: {
+        1: {
+          name: 'Anubis',
+          x: 10,
+          y: 6,
+          img: process.env.REACT_APP_NPC_IMG
+        }
+      },
       characters: action.payload.characters
         // .slice(0, 2)
         .reduce((mergedChars, character) => ({

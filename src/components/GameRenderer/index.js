@@ -45,12 +45,15 @@ class GameRenderer extends React.Component {
     if (
       prevProps.game.status === 'LOADING' &&
       this.props.game.status === 'IDLE' &&
-      this.props.character.data
+      this.props.character.data &&
+      this.props.selectors.npcsArray.length
     ) {
       const { positionX: x, positionY: y } = this.props.character.data;
 
       this.outfitImage = new Image();
       this.outfitImage.src = process.env[`REACT_APP_CHARACTER_IMG_${this.props.character.data.id}`];
+      this.npcImage = new Image();
+      this.npcImage.src = this.props.selectors.npcsArray[0].img;
 
       this.ownCharacter = new Character(this.ctx, {
         x, y,
@@ -102,6 +105,7 @@ class GameRenderer extends React.Component {
       mapX, mapY, charPosX, charPosY,
       isXLocked, isYLocked
     } = this.props.selectors.locationMapPosition;
+    const { npcsArray } = this.props.selectors;
 
     const posX = x * charWidth;
     const posY = y * charHeight;
@@ -127,6 +131,15 @@ class GameRenderer extends React.Component {
     for (let i = 0; i < characters.length; i++) {
       const character = characters[i];
       this.characers[i].render(character.positionX, character.positionY);
+    }
+
+    for (let npc of npcsArray) {
+      this.ctx.drawImage(this.npcImage,
+        0, 0,
+        CHARACTER_WIDTH, CHARACTER_HEIGHT,
+        npc.x * CHARACTER_WIDTH, npc.y * CHARACTER_HEIGHT,
+        CHARACTER_WIDTH, CHARACTER_HEIGHT
+      );
     }
 
     this.ctx.restore();
