@@ -10,4 +10,11 @@ export const mousePositionUpdate = (mouseX, mouseY) => ({
   meta
 });
 
-export const questDialogToggle = () => ({ type: QUEST_DIALOG_TOGGLE, meta });
+export const questDialogToggle = () => ({
+  type: QUEST_DIALOG_TOGGLE,
+  meta: {
+    io: true,
+    respondWith: '$_NPC_DIALOG_DATA',
+    callbackAction: '$_NPC_DIALOG_DATA'
+  }
+});

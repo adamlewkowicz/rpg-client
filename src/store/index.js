@@ -1,6 +1,6 @@
 import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
-import websocketMiddleware from './middleware/websockets';
+import websocketMiddleware from './middleware/websocket';
 import { socket } from '../io';
 import * as actionTypes from './action-types';
 
