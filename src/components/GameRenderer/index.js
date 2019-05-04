@@ -8,6 +8,7 @@ import {
   npcsArray, dynamicCollisions, naiveDynamicCollisions
 } from '../../store/selectors/location';
 import { CHARACTER_WIDTH, CHARACTER_HEIGHT } from '../../store/consts';
+import { isNearTo } from '../../utils';
 
 class PureCanvas extends React.Component {
   shouldComponentUpdate() {
@@ -207,6 +208,28 @@ class GameRenderer extends React.Component {
     });
   }
 
+  handleMouseClick = (event) => {
+    const { mouseX, mouseY } = this.props.game;
+    const { dynamicCollisions } = this.props.selectors;
+    const { positionX: x, positionY: y } = this.props.character.data;
+
+    const foundCollision = dynamicCollisions[mouseX][mouseY];
+
+    if (this.props.game.questDialogOpened) {
+      return this.props.actions.questDialogToggle();
+    }
+
+    if (foundCollision) {
+      const { x: targetX, y: targetY } = foundCollision.data;
+      switch(foundCollision.type) {
+        case 'NPC':
+          if (isNearTo(x, y, targetX, targetY)) {
+            this.props.actions.questDialogToggle();
+          }
+      }
+    }
+  }
+
   componentWillUnmount() {
   }
 
@@ -217,6 +240,7 @@ class GameRenderer extends React.Component {
         width={this.props.game.width}
         height={this.props.game.height}
         onMouseMove={this.handleMousePosition}
+        onClick={this.handleMouseClick}
       >
       </canvas>
     );
