@@ -3,6 +3,9 @@ import { connect } from 'react-redux';
 import { mapDispatchToProps } from '../../store/mappers';
 import styled from 'styled-components';
 import { QuestDialog } from '../Quest';
+import selectors from '../../store/selectors';
+
+import { Tooltip } from '../Tooltip';
 
 const Container = styled.div`
   position: absolute;
@@ -11,7 +14,8 @@ const Container = styled.div`
   /* z-index: -1; */
 `
 
-const UIContainer = ({ game, npc: npcDialog }) => {
+const UIContainer = ({ game, npc: npcDialog, selectors }) => {
+  const { focusedObject } = selectors;
   return (
     <Container
       width={game.width}
@@ -23,12 +27,25 @@ const UIContainer = ({ game, npc: npcDialog }) => {
           options={npcDialog.data.steps[npcDialog.step].options} 
         />
       )}
+      {focusedObject && (
+        <Tooltip
+          x={focusedObject.data.x}
+          y={focusedObject.data.y}
+          title={focusedObject.data.name}
+        />
+      )}
     </Container>
   );
 }
 
 const UIContainerWithStore = connect(
-  state => state,
+  state => ({
+    ...state,
+    selectors: {
+      focusedObject: selectors.focusedObject(state),
+      optional: true
+    }
+  }),
   mapDispatchToProps,
 )(UIContainer);
 

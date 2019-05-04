@@ -11,7 +11,9 @@ import {
 import { CHARACTER_WIDTH, CHARACTER_HEIGHT } from '../../store/consts';
 import { isNearTo, debounce } from '../../utils';
 
-const debounceA = debounce(500);
+let delay = 500;
+delay = 0;
+const debounceA = debounce(delay);
 
 class PureCanvas extends React.Component {
   shouldComponentUpdate() {
