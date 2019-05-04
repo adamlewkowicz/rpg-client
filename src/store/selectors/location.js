@@ -97,22 +97,25 @@ export const dynamicCollisions = createSelector(
   collisionsSelector,
   mobsArray,
   (collisions, mobs) => {
-    const collisionsCopy = [...collisions];
+    const collisionsCopy = collisions.map(xRow =>
+      xRow.map(point => !!point ? { type: 'TERRAIN' } : null)
+    );
     
     for (let mob of mobs) {
-      collisionsCopy[mob.x][mob.y] = 1;
-
-      /*
-        Alternative 
-
       collisionsCopy[mob.x][mob.y] = {
         type: 'MOB',
-        id: mob.id
-        data: mob ?
+        id: mob.id,
+        data: mob
       }
-      */
     }
 
     return collisionsCopy;
   }
+);
+
+export const naiveDynamicCollisions = createSelector(
+  dynamicCollisions,
+  dynamicCollisions => dynamicCollisions.map(xRow => 
+    xRow.map(point => ~~(!!point)) 
+  )
 );

@@ -3,7 +3,10 @@ import { connect } from 'react-redux';
 import { mapDispatchToProps } from '../../store/mappers';
 import { Location } from '../../engine/Location';
 import { Character } from '../../engine/Character';
-import { characters, locationMapPosition } from '../../store/selectors/location';
+import {
+  characters, locationMapPosition, mobsArray,
+  npcsArray, dynamicCollisions, naiveDynamicCollisions
+} from '../../store/selectors/location';
 import { CHARACTER_WIDTH, CHARACTER_HEIGHT } from '../../store/consts';
 
 class PureCanvas extends React.Component {
@@ -214,7 +217,11 @@ const GameRendererWithStore = connect(
     ...state,
     selectors: {
       characters: characters(state),
-      locationMapPosition: locationMapPosition(state)
+      locationMapPosition: locationMapPosition(state),
+      mobsArray: mobsArray(state),
+      npcsArray: npcsArray(state),
+      dynamicCollisions: dynamicCollisions(state),
+      naiveDynamicCollisions: naiveDynamicCollisions(state)
     }
   }),
   mapDispatchToProps
