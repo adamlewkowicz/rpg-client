@@ -161,7 +161,8 @@ export const locationObjects = createSelector(
     }
 
     for (let character of characters) {
-      locationObjects[character.x][character.y] = {
+      const { positionX: x, positionY: y } = character;
+      locationObjects[x][y] = {
         type: 'CHARACTER',
         id: character.id,
         data: character
@@ -172,7 +173,7 @@ export const locationObjects = createSelector(
   }
 );
 
-export const _naiveDynamicCollisions = createSelector(
+export const naiveCollisions = createSelector(
   locationObjects,
   locationObjects => locationObjects.map(xRow => 
     xRow.map(point => point != null

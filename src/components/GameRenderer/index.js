@@ -5,11 +5,13 @@ import { Location } from '../../engine/Location';
 import { Character } from '../../engine/Character';
 import {
   characters, locationMapPosition, mobsArray,
-  npcsArray, dynamicCollisions, naiveDynamicCollisions
+  npcsArray, dynamicCollisions, naiveDynamicCollisions,
+  naiveCollisions, locationObjects
 } from '../../store/selectors/location';
 import { CHARACTER_WIDTH, CHARACTER_HEIGHT } from '../../store/consts';
-import { isNearTo } from '../../utils';
-import { debounce } from 'throttle-debounce'
+import { isNearTo, debounce } from '../../utils';
+
+const debounceA = debounce(500);
 
 class PureCanvas extends React.Component {
   shouldComponentUpdate() {
@@ -240,7 +242,10 @@ class GameRenderer extends React.Component {
         ref={this.canvas}
         width={this.props.game.width}
         height={this.props.game.height}
-        onMouseMove={this.handleMousePosition}
+        onMouseMove={(event) => {
+          event.persist();
+          debounceA(() => this.handleMousePosition(event));
+        }}
         onClick={this.handleMouseClick}
         style={{ position: 'relative' }}
       >
@@ -258,7 +263,9 @@ const GameRendererWithStore = connect(
       mobsArray: mobsArray(state),
       npcsArray: npcsArray(state),
       dynamicCollisions: dynamicCollisions(state),
-      naiveDynamicCollisions: naiveDynamicCollisions(state)
+      naiveDynamicCollisions: naiveDynamicCollisions(state),
+      locationObjects: locationObjects(state),
+      naiveCollisions: naiveCollisions(state)
     }
   }),
   mapDispatchToProps

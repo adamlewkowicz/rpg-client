@@ -13,3 +13,9 @@ export const isNearTo = (sourceX, sourceY, targetX, targetY) => {
   }
   return false;
 }
+
+export const debounce = (delay = 250, timeout) => fn => {
+  clearTimeout(timeout);
+  timeout = setTimeout(fn, delay);
+  return timeout;
+}
