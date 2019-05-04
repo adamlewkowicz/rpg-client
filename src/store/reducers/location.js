@@ -12,7 +12,7 @@ const initialState = {
   data: null,
   width: 0,
   height: 0,
-  xRange: 0,
+  xRange: 0, /* xSize? */
   yRange: 0, 
 
   mobs: {},
@@ -21,7 +21,15 @@ const initialState = {
 
   droppedItems: {},
 
-  collisions: []
+  collisions: [],
+  /* combine static collisions - npcs and terrain ? */
+  /* Server output - proposal for new format
+    [
+      [null, { type: 'TERRAIN' }, { type: 'NPC', id: 1, data: null }]
+    ]
+  */
+  staticCollisions: [],
+  terrainCollisions: []
 }
 
 const locationReducer = (state = initialState, action) => {
