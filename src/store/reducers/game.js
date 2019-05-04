@@ -2,6 +2,7 @@ import {
   LOAD_LOCATION,
   CHANGE_LOCATION,
   REQUEST_LOCATION_CHANGE,
+  MOUSE_POSITION_UPDATE,
 
   $_LOAD_GAME,
 } from '../action-types';
@@ -18,7 +19,9 @@ const initialState = {
   width: 544,
   height: 528,
   charWidth: 32,
-  charHeight: 48
+  charHeight: 48,
+  mouseX: 0,
+  mouseY: 0
 }
 
 const game = (state = initialState, action) => {
@@ -27,6 +30,9 @@ const game = (state = initialState, action) => {
       ...state,
       status: STATUS.IDLE
     }
+    case MOUSE_POSITION_UPDATE:
+      const { mouseX, mouseY } = action.payload;
+      return { ...state, mouseX, mouseY };
     case LOAD_LOCATION: return action.payload;
     case REQUEST_LOCATION_CHANGE: return {
       ...state,

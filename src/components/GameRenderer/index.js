@@ -4,6 +4,7 @@ import { mapDispatchToProps } from '../../store/mappers';
 import { Location } from '../../engine/Location';
 import { Character } from '../../engine/Character';
 import { characters, locationMapPosition } from '../../store/selectors/location';
+import { CHARACTER_WIDTH, CHARACTER_HEIGHT } from '../../store/consts';
 
 class PureCanvas extends React.Component {
   shouldComponentUpdate() {
@@ -35,6 +36,8 @@ class GameRenderer extends React.Component {
 
     this.locationImage = new Image();
     this.locationImage.src = process.env.REACT_APP_LOCATION_IMG;
+
+    this.canvas.current.addEventListener('mousemove', this.handleMousePosition);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -140,6 +143,23 @@ class GameRenderer extends React.Component {
     requestAnimationFrame(this.renderGame);
   }
 
+  handleMousePosition = (event) => {
+    const { mapX, mapY } = this.props.selectors.locationMapPosition;
+    const rect = event.target.getBoundingClientRect();
+    const xPixels = event.clientX - rect.left;
+    const yPixels = event.clientY - rect.top;
+  
+    const mouseX = Math.floor((xPixels + mapX) / CHARACTER_WIDTH);
+    const mouseY = Math.floor((yPixels + mapY) / CHARACTER_HEIGHT);
+  
+    if (
+      mouseX !== this.props.game.mouseX ||
+      mouseY !== this.props.game.mouseY
+    ) {
+      this.props.actions.mousePositionUpdate(mouseX, mouseY);
+    }
+  }
+
   handleMovement = (event) => {
     const keyPressed = {
       87: 'w',
@@ -148,7 +168,7 @@ class GameRenderer extends React.Component {
       68: 'd'
     }[event.keyCode];
 
-    let { positionX = 0, positionY = 0 } = this.props.characer.data;
+    let { positionX = 0, positionY = 0 } = this.props.character.data;
 
     switch(keyPressed) {
       case 'w':
@@ -171,6 +191,10 @@ class GameRenderer extends React.Component {
       payload: { positionX, positionY },
       meta: { keyPressed }
     });
+  }
+
+  componentWillUnmount() {
+    this.canvas.current.removeEventListener('mousemove', this.handleMousePosition);
   }
 
   render() {
