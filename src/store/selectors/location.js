@@ -10,6 +10,11 @@ export const mobsArray = createSelector(
   mobs => Object.values(mobs)
 );
 
+export const aliveMobs = createSelector(
+  mobsArray,
+  mobs => mobs.filter(mob => mob.status !== 'DEAD')
+);
+
 export const npcsArray = createSelector(
   npcsSelector,
   npcs => Object.values(npcs)
@@ -126,5 +131,53 @@ export const naiveDynamicCollisions = createSelector(
   dynamicCollisions,
   dynamicCollisions => dynamicCollisions.map(xRow => 
     xRow.map(point => ~~(!!point)) 
+  )
+);
+
+export const locationObjects = createSelector(
+  dynamicCollisions,
+  npcsArray,
+  aliveMobs,
+  characters,
+  (collisions, npcs, mobs, characters) => {
+    const locationObjects = collisions.map(xRow =>
+      xRow.map(point => !!point ? { type: 'TERRAIN' } : null)
+    );
+
+    for (let npc of npcs) {
+      locationObjects[npc.x][npc.y] = {
+        type: 'NPC',
+        id: npc.id,
+        data: npc
+      }
+    }
+
+    for (let mob of mobs) {
+      locationObjects[mob.x][mob.y] = {
+        type: 'MOB',
+        id: mob.id,
+        data: mob
+      }
+    }
+
+    for (let character of characters) {
+      locationObjects[character.x][character.y] = {
+        type: 'CHARACTER',
+        id: character.id,
+        data: character
+      }
+    }
+
+    return locationObjects;
+  }
+);
+
+export const _naiveDynamicCollisions = createSelector(
+  locationObjects,
+  locationObjects => locationObjects.map(xRow => 
+    xRow.map(point => point != null
+      ? ~~(point.type === 'CHARACTER')
+      : 0
+    )
   )
 );
