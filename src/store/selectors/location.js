@@ -135,13 +135,13 @@ export const naiveDynamicCollisions = createSelector(
 );
 
 export const locationObjects = createSelector(
-  dynamicCollisions,
+  collisionsSelector,
   npcsArray,
   aliveMobs,
   characters,
   (collisions, npcs, mobs, characters) => {
     const locationObjects = collisions.map(xRow =>
-      xRow.map(point => !!point ? { type: 'TERRAIN' } : null)
+      xRow.map(_ => null)
     );
 
     for (let npc of npcs) {
@@ -174,11 +174,14 @@ export const locationObjects = createSelector(
 );
 
 export const naiveCollisions = createSelector(
+  collisionsSelector,
   locationObjects,
-  locationObjects => locationObjects.map(xRow => 
-    xRow.map(point => point != null
-      ? ~~(point.type === 'CHARACTER')
-      : 0
+  (collisions, locationObjects) => collisions.map((xRow, x) => 
+    xRow.map((point, y) => point
+      ? point
+      : ~~(locationObjects[x] && locationObjects[x][y] && locationObjects[x][y].type !== 'CHARACTER')
     )
   )
 );
+
+export { naiveCollisions as locationCollisions };
