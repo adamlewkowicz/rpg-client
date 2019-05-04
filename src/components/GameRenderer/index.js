@@ -39,8 +39,6 @@ class GameRenderer extends React.Component {
 
     this.locationImage = new Image();
     this.locationImage.src = process.env.REACT_APP_LOCATION_IMG;
-
-    this.canvas.current.addEventListener('mousemove', this.handleMousePosition);
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -197,7 +195,6 @@ class GameRenderer extends React.Component {
   }
 
   componentWillUnmount() {
-    this.canvas.current.removeEventListener('mousemove', this.handleMousePosition);
   }
 
   render() {
@@ -206,6 +203,7 @@ class GameRenderer extends React.Component {
         ref={this.canvas}
         width={this.props.game.width}
         height={this.props.game.height}
+        onMouseMove={this.handleMousePosition}
       >
       </canvas>
     );
