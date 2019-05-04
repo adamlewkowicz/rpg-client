@@ -19,16 +19,16 @@ export const DialogOption = ({ text }) => (
 const Container = styled.div`
 
 `
-
+const Title = styled.p``
 const OptionsList = styled.ul`
 
 `
 
 
-export const QuestDialog = ({ text, options }) => {
-
+export const QuestDialog = ({ title, options }) => {
   return (
     <Container>
+      <Title>{title}</Title>
       <OptionsList>
         {options.map(option => (
           <DialogOption  
