@@ -10,6 +10,7 @@ import { Triggers } from './components/Triggers';
 import { Game } from './components/Game';
 import { GameRenderer } from './components/GameRenderer';
 import { Loading } from './components/Loading';
+import { UIContainer } from './components/UIContainer';
 
 class App extends React.Component {
 
@@ -23,7 +24,8 @@ class App extends React.Component {
           <div className="App">
             <header className="App-header">
               {/* <img src={logo} className="App-logo" alt="logo" /> */}
-              <Game />
+              {/* <Game /> */}
+              <UIContainer />
               <Loading
                 children={<GameRenderer />}
               />

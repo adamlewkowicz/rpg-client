@@ -9,7 +9,6 @@ import {
 } from '../../store/selectors/location';
 import { CHARACTER_WIDTH, CHARACTER_HEIGHT } from '../../store/consts';
 import { isNearTo } from '../../utils';
-import { UIContainer } from '../UIContainer';
 import { debounce } from 'throttle-debounce'
 
 class PureCanvas extends React.Component {
@@ -245,7 +244,6 @@ class GameRenderer extends React.Component {
         onClick={this.handleMouseClick}
         style={{ position: 'relative' }}
       >
-        <UIContainer />
       </canvas>
     );
   }

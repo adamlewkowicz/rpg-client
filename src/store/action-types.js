@@ -39,3 +39,7 @@ export const FIGHT_ACTION = 'FIGHT_ACTION';
 
 export const $_FIGHT_ACTION_RESULT = '$_FIGHT_ACTION_RESULT';
 export const $_FIGHT_FINISH = '$_FIGHT_FINISH';
+
+/* Npc */
+export const NPC_DIALOG_TOGGLE = 'NPC_DIALOG_TOGGLE';
+export const $_NPC_DIALOG_DATA = '$_NPC_DIALOG_DATA';

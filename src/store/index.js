@@ -10,6 +10,7 @@ import items from './reducers/items';
 import location from './reducers/location';
 import battle from './reducers/battle';
 import character from './reducers/character';
+import npc from './reducers/npc';
 
 
 const {
@@ -28,7 +29,8 @@ const reducers = combineReducers({
   items,
   location,
   character,
-  battle
+  battle,
+  npc
 });
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
