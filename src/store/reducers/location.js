@@ -7,6 +7,7 @@ import {
   MOB_STATUS, CHARACTER_STATUS,
   CHARACTER_WIDTH, CHARACTER_HEIGHT
 } from '../consts';
+import { normalize } from '../../utils';
 
 const initialState = {
   data: null,
@@ -41,24 +42,8 @@ const locationReducer = (state = initialState, action) => {
       xRange: 2048 / CHARACTER_WIDTH,
       yRange: 3072 / CHARACTER_HEIGHT,
       data: action.payload.location,
-      mobs: {
-        1: {
-          name: 'Eagle',
-          level: 12,
-          status: MOB_STATUS.IDLE,
-          x: 3,
-          y: 5,
-          type: { id: 1, damage: 12 }
-        }
-      },
-      npcs: {
-        1: {
-          name: 'Anubis',
-          x: 10,
-          y: 6,
-          img: process.env.REACT_APP_NPC_IMG
-        }
-      },
+      mobs: normalize(action.payload.mobs),
+      npcs: normalize(action.payload.npcs),
       characters: action.payload.characters
         // .slice(0, 2)
         .reduce((mergedChars, character) => ({

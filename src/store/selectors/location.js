@@ -96,7 +96,8 @@ export const locationMapPosition = createSelector(
 export const dynamicCollisions = createSelector(
   collisionsSelector,
   mobsArray,
-  (collisions, mobs) => {
+  npcsArray,
+  (collisions, mobs, npcs) => {
     const collisionsCopy = collisions.map(xRow =>
       xRow.map(point => !!point ? { type: 'TERRAIN' } : null)
     );
@@ -106,6 +107,14 @@ export const dynamicCollisions = createSelector(
         type: 'MOB',
         id: mob.id,
         data: mob
+      }
+    }
+
+    for (let npc of npcs) {
+      collisionsCopy[npc.x][npc.y] = {
+        type: 'NPC',
+        id: npc.id,
+        data: npc
       }
     }
 

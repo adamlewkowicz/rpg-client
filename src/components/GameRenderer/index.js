@@ -53,7 +53,7 @@ class GameRenderer extends React.Component {
       this.outfitImage = new Image();
       this.outfitImage.src = process.env[`REACT_APP_CHARACTER_IMG_${this.props.character.data.id}`];
       this.npcImage = new Image();
-      this.npcImage.src = this.props.selectors.npcsArray[0].img;
+      this.npcImage.src = process.env.REACT_APP_NPC_IMG;
 
       this.ownCharacter = new Character(this.ctx, {
         x, y,
