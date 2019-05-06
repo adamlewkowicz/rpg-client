@@ -43,3 +43,7 @@ export const $_FIGHT_FINISH = '$_FIGHT_FINISH';
 /* Npc */
 export const NPC_DIALOG_TOGGLE = 'NPC_DIALOG_TOGGLE';
 export const $_NPC_DIALOG_DATA = '$_NPC_DIALOG_DATA';
+
+/* Syntax proposal for dispatch-only responses (types that should not be listened by socket) */
+export const $_NPC_DIALOG_RECEIVE = '[dispatch] NPC_DIALOG_RECEIVE';
+/* [dispatch] [$] [$$] $$ # */
