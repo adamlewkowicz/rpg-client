@@ -7,7 +7,6 @@ export const CHARACTER_JOIN = 'CHARACTER_JOIN';
 export const CHANGE_LOCATION = 'CHANGE_LOCATION';
 export const REQUEST_LOCATION_CHANGE = 'REQUEST_LOCATION_CHANGE';
 export const MOUSE_POSITION_UPDATE = 'MOUSE_POSITION_UPDATE';
-export const QUEST_DIALOG_TOGGLE = 'QUEST_DIALOG_TOGGLE';
 
 export const $_LOAD_GAME = '$_LOAD_GAME';
 
@@ -41,8 +40,9 @@ export const $_FIGHT_ACTION_RESULT = '$_FIGHT_ACTION_RESULT';
 export const $_FIGHT_FINISH = '$_FIGHT_FINISH';
 
 /* Npc */
-export const NPC_DIALOG_TOGGLE = 'NPC_DIALOG_TOGGLE';
-export const $_NPC_DIALOG_DATA = '$_NPC_DIALOG_DATA';
+export const NPC_DIALOG_REQUEST = 'NPC_DIALOG_REQUEST';
+export const NPC_DIALOG_CLOSE = 'NPC_DIALOG_CLOSE';
+export const $_NPC_DIALOG_RESPONSE = '$_NPC_DIALOG_RESPONSE';
 
 /* Syntax proposal for dispatch-only responses (types that should not be listened by socket) */
 export const $_NPC_DIALOG_RECEIVE = '[dispatch] NPC_DIALOG_RECEIVE';

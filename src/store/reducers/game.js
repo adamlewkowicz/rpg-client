@@ -3,7 +3,6 @@ import {
   CHANGE_LOCATION,
   REQUEST_LOCATION_CHANGE,
   MOUSE_POSITION_UPDATE,
-  QUEST_DIALOG_TOGGLE,
 
   $_LOAD_GAME,
 } from '../action-types';
@@ -51,10 +50,6 @@ const game = (state = initialState, action) => {
         characters: { [state.charId]: myCharacter, ...characters },
         status: STATUS.IDLE
       }
-    }
-    case QUEST_DIALOG_TOGGLE: return {
-      ...state,
-      questDialogOpened: !state.questDialogOpened
     }
     default: return state;
   }

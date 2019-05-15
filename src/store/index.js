@@ -41,6 +41,7 @@ const socketActions = Object
 
 const ioMiddleware = createIoMiddleware({
   socket,
+  autoEmit: false,
   listenTo: [
     CHARACTER_JOIN, CHANGE_LOCATION,
     CHARACTER_LEAVE, RECEIVE_MESSAGE,

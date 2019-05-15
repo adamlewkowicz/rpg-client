@@ -221,15 +221,15 @@ class GameRenderer extends React.Component {
     const foundCollision = dynamicCollisions[mouseX][mouseY];
 
     if (this.props.game.questDialogOpened) {
-      return this.props.actions.questDialogToggle();
+      return this.props.actions.npcDialogClose();
     }
 
     if (foundCollision) {
-      const { x: targetX, y: targetY } = foundCollision.data;
+      const { x: collisionX, y: collisionY } = foundCollision.data;
       switch(foundCollision.type) {
         case 'NPC':
-          if (isNearTo(x, y, targetX, targetY)) {
-            this.props.actions.questDialogToggle();
+          if (isNearTo(x, y, collisionX, collisionY)) {
+            this.props.actions.npcDialogOpen();
           }
       }
     }

@@ -1,6 +1,7 @@
 import {
-  $_NPC_DIALOG_DATA, QUEST_DIALOG_TOGGLE,
-  NPC_DIALOG_TOGGLE 
+  NPC_DIALOG_REQUEST,
+  $_NPC_DIALOG_RESPONSE,
+  NPC_DIALOG_CLOSE
 } from '../action-types';
 
 const initialState = {
@@ -12,18 +13,17 @@ const initialState = {
 
 const npc = (state = initialState, action) => {
   switch(action.type) {
-    case QUEST_DIALOG_TOGGLE:
-    case NPC_DIALOG_TOGGLE: return {
+    case NPC_DIALOG_REQUEST: return {
       ...state,
-      isLoading: !state.opened,
-      opened: !state.opened
+      opened: true,
+      isLoading: true 
     }
-    case $_NPC_DIALOG_DATA: return {
+    case $_NPC_DIALOG_RESPONSE: return {
       ...state,
       data: action.payload,
-      isLoading: false,
-      step: 0
+      isLoading: false
     }
+    case NPC_DIALOG_CLOSE: return initialState;
     default: return state;
   }
 }
