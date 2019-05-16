@@ -4,7 +4,7 @@ import * as chatActions from './actions/chat';
 import * as battleActions from './actions/battle';
 import * as characterActions from './actions/character';
 import * as gameActions from './actions/game';
-import * as npcActions from './actions/npc.ts';
+import * as npcActions from './actions/npc/index';
 
 
 export default {
