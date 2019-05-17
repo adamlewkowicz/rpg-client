@@ -2,7 +2,7 @@ import * as Actions from 'rpg-shared/action-types';
 import { NPC_SHOP_TRADE, $_NPC_SHOP_RESPONSE, NPC_SHOP_REQUEST } from 'rpg-shared/dist/consts';
 import { Item } from 'rpg-shared/objects';
 
-export interface NpcShop {
+export interface NpcShopState {
   isLoading: boolean
   opened: boolean
   items: Item[]
@@ -10,7 +10,7 @@ export interface NpcShop {
   selling: number[]
 }
 
-const initialState = {
+const initialState: NpcShopState = {
   isLoading: false,
   opened: false,
   items: [],
@@ -18,7 +18,10 @@ const initialState = {
   selling: []
 }
 
-const npcShopReducer = (state = initialState, action: Actions.NpcShopActions) => {
+const npcShopReducer = (
+  state = initialState,
+  action: Actions.NpcShopActions
+): NpcShopState => {
   switch(action.type) {
     case NPC_SHOP_REQUEST: return {
       ...state,
