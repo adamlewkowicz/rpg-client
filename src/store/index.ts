@@ -5,9 +5,11 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import * as types from 'rpg-shared/dist/consts';
 
 import npcDialog from './reducers/npcDialog';
+import npcShop from './reducers/npcShop';
 
 const rootReducer = combineReducers({
-  npcDialog
+  npcDialog,
+  npcShop
 });
 
 const composeEnhancers = composeWithDevTools({

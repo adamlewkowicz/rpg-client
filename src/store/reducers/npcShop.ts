@@ -1,14 +1,7 @@
 import * as Actions from 'rpg-shared/action-types';
 import { NPC_SHOP_TRADE, $_NPC_SHOP_RESPONSE, NPC_SHOP_REQUEST } from 'rpg-shared/dist/consts';
 import { Item } from 'rpg-shared/objects';
-
-export interface NpcShopState {
-  isLoading: boolean
-  opened: boolean
-  items: Item[]
-  buying: number[]
-  selling: number[]
-}
+import { NpcShopState } from 'rpg-shared/store';
 
 const initialState: NpcShopState = {
   isLoading: false,

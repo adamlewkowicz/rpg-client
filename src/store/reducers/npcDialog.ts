@@ -1,13 +1,6 @@
 import * as Actions from 'rpg-shared/action-types';
 import { NPC_DIALOG_REQUEST, $_NPC_DIALOG_RESPONSE } from 'rpg-shared/dist/consts';
-import {  } from 'rpg-shared/objects';
-
-export interface NpcDialogState {
-  data: any
-  opened: boolean
-  isLoading: boolean
-  step: number
-}
+import { NpcDialogState } from 'rpg-shared/store';
 
 const initialState: NpcDialogState = {
   data: null,
