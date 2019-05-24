@@ -1,13 +1,9 @@
 import {
-  SEND_MESSAGE,
-  RECEIVE_MESSAGE,
   $_MESSAGE_RECEIVE,
   MESSAGE_SEND
 } from 'rpg-shared/consts';
-import { MESSAGE_TYPES } from '../consts';
 import { ChatState } from 'rpg-shared/store';
 import { ChatActions } from 'rpg-shared/action-types/union-types';
-const { PRIVATE, GROUP, LOCAL } = MESSAGE_TYPES;
 
 const initialState: ChatState = {
   private: {},
@@ -21,35 +17,38 @@ const chatReducer = (
   action: ChatActions
 ): ChatState => {
   switch(action.type) {
-    case MESSAGE_SEND: 
-    case SEND_MESSAGE: return {
-      ...state,
-      local: [...state.local, action.payload] 
-    }
+    case MESSAGE_SEND:
     case $_MESSAGE_RECEIVE:
-    case RECEIVE_MESSAGE:
-      const messageType = action.payload.type;
-
       switch(action.payload.type) {
-        case LOCAL: return {
+        case 'LOCAL': return {
           ...state,
           local: [...state.local, action.payload]
         }
-        case PRIVATE:
-        case GROUP: {
-          const target = messageType.toLowerCase();
-          const { fromCharId } = action.payload;
-          const { [fromCharId]: senderMessages = [], ...rest } = state[target];
-          
+        case 'GLOBAL': return {
+          ...state,
+          global: [...state.global, action.payload]
+        }
+        case 'PRIVATE': {
+          const { [action.meta.to as any]: prevMessages = [], ...rest } = state.private;
           return {
             ...state,
-            [target]: {
+            private: {
               ...rest,
-              [fromCharId]: [...senderMessages, action.payload]
+              [action.meta.to as any]: [...prevMessages, action.payload]
             }
           }
         }
-        default: throw new Error(`Invalid message type ${messageType}`)
+        case 'GROUP': {
+          const { [action.meta.to as any]: prevMessages = [], ...rest } = state.group;
+          return {
+            ...state,
+            group: {
+              ...rest,
+              [action.meta.to as any]: [...prevMessages, action.payload]
+            }
+          }
+        }
+        default: return state;
       }
     default: return state;
   }
