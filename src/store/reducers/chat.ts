@@ -1,6 +1,7 @@
 import {
   $_MESSAGE_RECEIVE,
-  MESSAGE_SEND
+  MESSAGE_SEND,
+  $_MESSAGE_ACKNOWLEDGE
 } from 'rpg-shared/consts';
 import { ChatState } from 'rpg-shared/store';
 import { ChatActions } from 'rpg-shared/action-types/union-types';
@@ -49,6 +50,14 @@ const chatReducer = (
           }
         }
         default: return state;
+      }
+      case $_MESSAGE_ACKNOWLEDGE: return {
+        ...state,
+        local: state.local.map(msg => 
+          msg.id === action.meta.prevId
+            ? { ...msg, id: action.meta.nextId }
+            : msg 
+        )
       }
     default: return state;
   }
