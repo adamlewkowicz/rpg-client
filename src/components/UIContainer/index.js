@@ -14,7 +14,7 @@ const Container = styled.div`
   /* z-index: -1; */
 `
 
-const UIContainer = ({ game, npc: npcDialog, selectors }) => {
+const UIContainer = ({ game, npcDialog, selectors }) => {
   const { focusedObject } = selectors;
   return (
     <Container

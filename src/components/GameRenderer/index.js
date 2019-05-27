@@ -45,6 +45,7 @@ class GameRenderer extends React.Component {
 
     this.locationImage = new Image();
     this.locationImage.src = process.env.REACT_APP_LOCATION_IMG;
+    this.locationImage.onload = () => this.setState({ isLoaded: true });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -52,9 +53,11 @@ class GameRenderer extends React.Component {
       prevProps.game.status === 'LOADING' &&
       this.props.game.status === 'IDLE' &&
       this.props.character.data &&
-      this.props.selectors.npcsArray.length
+      this.props.selectors.npcsArray.length &&
+      this.state.isLoaded
     ) {
       const { positionX: x, positionY: y } = this.props.character.data;
+
 
       this.outfitImage = new Image();
       this.outfitImage.src = process.env[`REACT_APP_CHARACTER_IMG_${this.props.character.data.id}`];

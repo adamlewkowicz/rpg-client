@@ -6,8 +6,16 @@ import * as types from 'rpg-shared/dist/consts';
 
 import npcDialog from './reducers/npcDialog';
 import npcShop from './reducers/npcShop';
+import location from './reducers/location';
+import game from './reducers/game';
+import character from './reducers/character';
+import chat from './reducers/chat';
 
 const rootReducer = combineReducers({
+  game,
+  location,
+  character,
+  chat,
   npcDialog,
   npcShop
 });
