@@ -4,11 +4,11 @@ import {
   $_ITEM_DROPPED_ADD, $_ITEM_DROPPED_REMOVE
 } from 'rpg-shared/dist/consts';
 import {
-  MOB_STATUS, CHARACTER_STATUS,
   CHARACTER_WIDTH, CHARACTER_HEIGHT
 } from '../consts';
 import { normalize } from '../../utils';
 import { LocationState } from 'rpg-shared/store'
+import { LocationActions } from 'rpg-shared/action-types/union-types';
 
 const initialState: LocationState = {
   data: null,
@@ -20,7 +20,6 @@ const initialState: LocationState = {
   mobs: {},
   npcs: {},
   characters: {},
-
   droppedItems: {},
 
   collisions: null,
@@ -30,7 +29,7 @@ const initialState: LocationState = {
 
 const locationReducer = (
   state = initialState,
-  action: any
+  action: LocationActions
 ): LocationState => {
   switch(action.type) {
     case $_LOAD_GAME: return {
@@ -42,15 +41,7 @@ const locationReducer = (
       data: action.payload.location,
       mobs: normalize(action.payload.mobs),
       npcs: normalize(action.payload.npcs),
-      characters: action.payload.characters
-        // .slice(0, 2)
-        .reduce((mergedChars: any, character: any) => ({
-          ...mergedChars,
-          [character.id]: {
-            ...character,
-            status: CHARACTER_STATUS.IDLE
-          }
-        }), {}),
+      characters: normalize(action.payload.characters),
       collisions: action.payload.collisions
     }
     case $_CHARACTER_UPDATE: return {
@@ -71,7 +62,7 @@ const locationReducer = (
       }
     }
     case $_CHARACTER_LEAVE: {
-      const { [action.payload]: deleted, ...characters } = state.characters;
+      const { [action.meta.charId]: deleted, ...characters } = state.characters;
       return { ...state, characters };
     }
     case $_ITEM_DROPPED_ADD: return {
@@ -82,7 +73,7 @@ const locationReducer = (
       }
     }
     case $_ITEM_DROPPED_REMOVE: {
-      const { [action.payload.id]: deleted, ...droppedItems } = state.droppedItems;
+      const { [action.meta.itemId]: deleted, ...droppedItems } = state.droppedItems;
       return { ...state, droppedItems };
     }
     default: return state;
