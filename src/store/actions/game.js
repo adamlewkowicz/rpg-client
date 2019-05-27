@@ -1,7 +1,7 @@
 import {
   MOUSE_POSITION_UPDATE,
   QUEST_DIALOG_TOGGLE
-} from '../action-types';
+} from 'rpg-shared/dist/consts';
 const meta = { io: false };
 
 export const mousePositionUpdate = (mouseX, mouseY) => ({

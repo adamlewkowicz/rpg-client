@@ -2,7 +2,7 @@ import {
   $_MESSAGE_RECEIVE,
   MESSAGE_SEND,
   $_MESSAGE_ACKNOWLEDGE
-} from 'rpg-shared/consts';
+} from 'rpg-shared/dist/consts';
 import { ChatState } from 'rpg-shared/store';
 import { ChatActions } from 'rpg-shared/action-types/union-types';
 

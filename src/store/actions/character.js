@@ -2,7 +2,7 @@ import {
   CHANGE_LOCATION,
   UPDATE_CHARACTER,
   CHARACTER_UPDATE
-} from '../action-types';
+} from 'rpg-shared/dist/consts';
 
 export const updateCharacter = (payload) => ({
   type: CHARACTER_UPDATE,

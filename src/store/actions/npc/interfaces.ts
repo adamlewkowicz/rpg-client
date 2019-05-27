@@ -1,6 +1,6 @@
 import {
   NPC_DIALOG_CLOSE, NPC_DIALOG_REQUEST
-} from '../../action-types';
+} from 'rpg-shared/dist/consts';
 
 interface NpcDialogOpen {
   type: typeof NPC_DIALOG_REQUEST,

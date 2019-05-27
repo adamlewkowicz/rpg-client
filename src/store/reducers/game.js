@@ -5,7 +5,7 @@ import {
   MOUSE_POSITION_UPDATE,
 
   $_LOAD_GAME,
-} from '../action-types';
+} from 'rpg-shared/dist/consts';
 import { CHARACTER_STATUS } from '../consts';
 
 const STATUS = {

@@ -1,6 +1,6 @@
 import {
-  SEND_MESSAGE
-} from '../action-types';
+  MESSAGE_SEND
+} from 'rpg-shared/dist/consts';
 import { MESSAGE_TYPES } from '../consts';
 const { PRIVATE, GROUP, LOCAL } = MESSAGE_TYPES;
 
@@ -14,7 +14,7 @@ const { PRIVATE, GROUP, LOCAL } = MESSAGE_TYPES;
 */
 
 export const sendLocalMessage = (data) => ({
-  type: SEND_MESSAGE,
+  type: MESSAGE_SEND,
   payload: {
     type: LOCAL,
     data,
@@ -23,7 +23,7 @@ export const sendLocalMessage = (data) => ({
 });
 
 export const sendPrivateMessage = (data, to) => ({
-  type: SEND_MESSAGE,
+  type: MESSAGE_SEND,
   payload: {
     type: PRIVATE,
     data,
@@ -32,7 +32,7 @@ export const sendPrivateMessage = (data, to) => ({
 });
 
 export const sendGroupMessage = (data, to) => ({
-  type: SEND_MESSAGE,
+  type: MESSAGE_SEND,
   payload: {
     type: GROUP,
     data,

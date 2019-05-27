@@ -6,7 +6,7 @@ import {
   ITEM_PICKUP,
 
   ITEM_DROP,
-} from '../action-types';
+} from 'rpg-shared/dist/consts';
 
 export const moveItem = (itemId, position) => ({
   type: ITEM_UPDATE,

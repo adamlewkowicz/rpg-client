@@ -2,7 +2,7 @@ import {
   FIGHT_START,
   $_FIGHT_ACTION_RESULT,
   $_FIGHT_FINISH
-} from '../action-types';
+} from 'rpg-shared/dist/consts';
 
 const initialState = {
   fightId: null,

@@ -1,7 +1,9 @@
 import {
   updateCharacter, updateCharacterStatus
 } from './character'
-import { FIGHT_START, CHARACTER_UPDATE, FIGHT_ACTION } from '../action-types';
+import {
+  FIGHT_START, CHARACTER_UPDATE, FIGHT_ACTION
+} from 'rpg-shared/dist/consts';
 import { CHARACTER_STATUS } from '../consts';
 
 export const startFight = (mobId) => ({

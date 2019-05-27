@@ -2,7 +2,7 @@ import {
   $_LOAD_GAME, $_CHARACTER_UPDATE,
   $_CHARACTER_JOIN, $_CHARACTER_LEAVE,
   $_ITEM_DROPPED_ADD, $_ITEM_DROPPED_REMOVE
-} from '../action-types';
+} from 'rpg-shared/dist/consts';
 import {
   MOB_STATUS, CHARACTER_STATUS,
   CHARACTER_WIDTH, CHARACTER_HEIGHT
