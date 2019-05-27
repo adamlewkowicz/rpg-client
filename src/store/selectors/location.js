@@ -26,8 +26,8 @@ export const characters = createSelector(
 );
 
 export const characterCords = (state) => ({
-  x: state.character.data.positionX,
-  y: state.character.data.positionY
+  x: state.character.data ? state.character.data.positionX : 0,
+  y: state.character.data ? state.character.data.positionY : 0
 });
 
 export const gameWindowSize = (state) => ({
