@@ -1,6 +1,6 @@
-import * as types from 'rpg-shared/consts';
+import * as types from 'rpg-shared/lib/consts';
 import { socket } from '../io';
-const { createIoMiddleware } = require("@art4/reduxio");
+import { createIoMiddleware } from '@art4/reduxio';
 
 const remoteEvents = Object
   .values(types)
