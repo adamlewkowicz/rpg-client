@@ -5,8 +5,8 @@ import {
   MOUSE_POSITION_UPDATE,
   $_LOAD_GAME,
 } from 'rpg-shared/dist/consts';
-import { GameState } from 'rpg-shared/store';
-import { GameActions } from 'rpg-shared/action-types/union-types';
+import { GameState } from 'rpg-shared/lib/store';
+import { GameActions } from 'rpg-shared/lib/action-types/union-types';
 
 
 const initialState: GameState = {

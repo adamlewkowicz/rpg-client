@@ -1,9 +1,9 @@
 import {
 	$_LOAD_GAME, CHARACTER_UPDATE
-} from 'rpg-shared/consts';
+} from 'rpg-shared/lib/consts';
 import { normalize } from '../../utils';
-import { CharacterState } from 'rpg-shared/store';
-import { CharacterActions } from 'rpg-shared/action-types/union-types'
+import { CharacterState } from 'rpg-shared/lib/store';
+import { CharacterActions } from 'rpg-shared/lib/action-types/union-types'
 
 const initialState: CharacterState = {
 	data: null,

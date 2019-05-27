@@ -1,7 +1,7 @@
-import * as Actions from 'rpg-shared/action-types';
-import { NPC_SHOP_TRADE, $_NPC_SHOP_RESPONSE, NPC_SHOP_REQUEST } from 'rpg-shared/dist/consts';
-import { Item } from 'rpg-shared/objects';
-import { NpcShopState } from 'rpg-shared/store';
+import * as Actions from 'rpg-shared/lib/action-types';
+import { NPC_SHOP_TRADE, $_NPC_SHOP_RESPONSE, NPC_SHOP_REQUEST } from 'rpg-shared/lib/consts';
+import { Item } from 'rpg-shared/lib/objects';
+import { NpcShopState } from 'rpg-shared/lib/store';
 
 const initialState: NpcShopState = {
   isLoading: false,
