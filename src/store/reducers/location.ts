@@ -22,7 +22,7 @@ const initialState: LocationState = {
   characters: {},
   droppedItems: {},
 
-  collisions: null,
+  collisions: [[]],
   staticCollisions: [],
   terrainCollisions: []
 }
