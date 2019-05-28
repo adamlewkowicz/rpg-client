@@ -26,6 +26,7 @@ export const characters = createSelector(
   charactersSelector,
   (characters) => Object.values(characters)
 );
+export { characters as charactersArray };
 
 export const characterCords = (state: AppState) => ({
   x: state.character.data ? state.character.data.positionX : 0,
