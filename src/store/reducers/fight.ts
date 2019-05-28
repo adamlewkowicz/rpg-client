@@ -3,18 +3,24 @@ import {
   $_FIGHT_ACTION_RESULT,
   $_FIGHT_FINISH
 } from 'rpg-shared/dist/consts';
+import { FightState } from 'rpg-shared/lib/store';
+import { FightActions } from 'rpg-shared/lib/action-types/union-types';
 
-const initialState = {
-  fightId: null,
+const initialState: FightState = {
+  id: null,
   actions: [],
-  finished: false
+  status: null
 }
 
-const battleReducer = (state = initialState, action) => {
+const fightReducer = (
+  state = initialState,
+  action: FightActions
+): FightState => {
   switch(action.type) {
     case FIGHT_START: return {
       ...state,
-      finished: false
+      ...initialState,
+      status: 'STARTED'
     }
     case $_FIGHT_ACTION_RESULT: return {
       ...state,
@@ -29,10 +35,10 @@ const battleReducer = (state = initialState, action) => {
         ...state.actions,
         ...action.payload
       ],
-      finished: true
+      status: 'FINISHED'
     }
     default: return state;
   }
 }
 
-export default battleReducer;
+export default fightReducer;

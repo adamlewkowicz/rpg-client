@@ -10,6 +10,7 @@ import location from './reducers/location';
 import game from './reducers/game';
 import character from './reducers/character';
 import chat from './reducers/chat';
+import fight from './reducers/fight';
 
 const rootReducer = combineReducers({
   game,
@@ -17,7 +18,8 @@ const rootReducer = combineReducers({
   character,
   chat,
   npcDialog,
-  npcShop
+  npcShop,
+  fight
 });
 
 const composeEnhancers = composeWithDevTools({
