@@ -4,8 +4,6 @@ import { mapDispatchToProps } from '../../store/mappers';
 import styled from 'styled-components';
 import { QuestDialog } from '../Quest';
 import * as selectors from '../../store/selectors';
-import * as gameSelectors from '../../store/selectors/game'
-import { focusedObject } from '../../store/selectors/game';
 import { AppState } from '../../store';
 import { GameState, NpcDialogState } from 'rpg-shared/lib/store';
 
@@ -14,7 +12,7 @@ import { Tooltip } from '../Tooltip';
 export interface UIContainerProps {
   game: GameState
   npcDialog: NpcDialogState
-  focusedObject: ReturnType<typeof focusedObject>
+  focusedObject: ReturnType<typeof selectors.focusedObject>
 }
 
 interface ContainerProps {
@@ -39,7 +37,7 @@ const UIContainer = ({ game, npcDialog, focusedObject }: UIContainerProps) => {
           options={npcDialog.data.steps[npcDialog.step].options} 
         />
       )}
-      {focusedObject != null && (
+      {focusedObject && (
         <Tooltip
           x={focusedObject.data.x}
           y={focusedObject.data.y}
@@ -53,7 +51,7 @@ const UIContainer = ({ game, npcDialog, focusedObject }: UIContainerProps) => {
 const UIContainerWithStore = connect(
   (state: AppState) => ({
     ...state,
-    focusedObject: gameSelectors.focusedObject(state),
+    focusedObject: selectors.focusedObject(state)
   }),
   mapDispatchToProps,
 )(UIContainer);
