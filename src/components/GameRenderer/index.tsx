@@ -1,4 +1,4 @@
-import React, { CanvasHTMLAttributes } from 'react';
+import React, { CanvasHTMLAttributes, MouseEvent, MouseEventHandler, SyntheticEvent } from 'react';
 import { connect } from 'react-redux';
 import { mapDispatchToProps } from '../../store/mappers';
 import { Location } from '../../engine/Location';
@@ -12,6 +12,8 @@ import { CHARACTER_WIDTH, CHARACTER_HEIGHT } from '../../store/consts';
 import { isNearTo, debounce } from '../../utils';
 import { AppState } from '../../store';
 import * as selectors from '../../store/selectors';
+import { KeyboardEvent } from 'react-native';
+import { Dispatch } from 'redux';
 
 let delay = 500;
 delay = 0;
@@ -29,6 +31,8 @@ interface GameRendererProps extends AppState {
     locationObjects: ReturnType<typeof selectors.locationObjects>
     naiveCollisions: ReturnType<typeof selectors.naiveCollisions>
   }
+  dispatch: Dispatch
+  actions: any
 }
 
 interface GameRendererState {
@@ -40,6 +44,12 @@ class GameRenderer extends React.Component<GameRendererProps, GameRendererState>
   
   canvas: React.RefObject<any>
   ctx: null | CanvasRenderingContext2D
+  locationImage: HTMLImageElement | null
+  outfitImage: HTMLImageElement | null
+  npcImage: HTMLImageElement | null
+  location: any
+  characters: any
+  ownCharacter: any
 
   state = {
     isLoaded: false
@@ -52,9 +62,10 @@ class GameRenderer extends React.Component<GameRendererProps, GameRendererState>
 
     this.locationImage = null;
     this.outfitImage = null;
+    this.npcImage = null;
 
     this.location = null;
-    this.characers = [];
+    this.characters = [];
     this.ownCharacter = null;
   }
 
@@ -89,15 +100,15 @@ class GameRenderer extends React.Component<GameRendererProps, GameRendererState>
         gameHeight: this.props.game.height,
         locationWidth: this.props.location.width,
         locationHeight: this.props.location.height
-      });
+      } as any);
       this.setupGame();
     }
   }
 
   setupGame = () => {
-    const { positionX: x, positionY: y } = this.props.character.data;
+    const { x, y } = this.props.character.data;
     const { charWidth, charHeight } = this.props.game;
-    const { characters } = this.props.selectors;
+    const { charactersArray } = this.props.selectors;
     const { ctx } = this;
 
     this.location = new Location(this.ctx, {
@@ -107,7 +118,7 @@ class GameRenderer extends React.Component<GameRendererProps, GameRendererState>
       charHeight
     });
 
-    this.characers = characters.map(character => {
+    this.characters = charactersArray.map(character => {
       const image = new Image();
       image.src = process.env[`REACT_APP_CHARACTER_IMG_${character.id}`];
 
@@ -117,7 +128,7 @@ class GameRenderer extends React.Component<GameRendererProps, GameRendererState>
         image,
         width: charWidth,
         height: charHeight
-      });
+      } as any);
     });
 
     this.renderGame();
@@ -126,17 +137,17 @@ class GameRenderer extends React.Component<GameRendererProps, GameRendererState>
   renderGame = () => {
     const { positionX: x, positionY: y } = this.props.character.data;
     const { charWidth, charHeight } = this.props.game;
-    const { characters } = this.props.selectors;
+    const { charactersArray } = this.props.selectors;
     const { width: gameWidth, height: gameHeight } = this.ctx.canvas;
     const {
       mapX, mapY, charPosX, charPosY,
       isXLocked, isYLocked
     } = this.props.selectors.locationMapPosition;
     const { npcsArray } = this.props.selectors;
+    if (!this.ctx) return;
 
     const posX = x * charWidth;
     const posY = y * charHeight;
-    
 
     /* I - location */
     this.ctx.drawImage(this.locationImage,
@@ -155,9 +166,9 @@ class GameRenderer extends React.Component<GameRendererProps, GameRendererState>
       isYLocked ? 0 : -mapY
     );
 
-    for (let i = 0; i < characters.length; i++) {
-      const character = characters[i];
-      this.characers[i].render(character.positionX, character.positionY);
+    for (let i = 0; i < charactersArray.length; i++) {
+      const character = charactersArray[i];
+      this.characters[i].render(character.positionX, character.positionY);
     }
 
     for (let npc of npcsArray) {
@@ -184,61 +195,65 @@ class GameRenderer extends React.Component<GameRendererProps, GameRendererState>
     requestAnimationFrame(this.renderGame);
   }
 
-  handleMousePosition = (event) => {
-    const { mapX, mapY } = this.props.selectors.locationMapPosition;
-    const rect = event.target.getBoundingClientRect();
-    const xPixels = event.clientX - rect.left;
-    const yPixels = event.clientY - rect.top;
-  
-    const mouseX = Math.floor((xPixels + mapX) / CHARACTER_WIDTH);
-    const mouseY = Math.floor((yPixels + mapY) / CHARACTER_HEIGHT);
-  
-    if (
-      mouseX !== this.props.game.mouseX ||
-      mouseY !== this.props.game.mouseY
-    ) {
-      this.props.actions.mousePositionUpdate(mouseX, mouseY);
-    }
+  handleMousePosition = (event: MouseEvent<HTMLCanvasElement>) => {
+    event.persist();
+    debounceA(() => {
+      const { mapX, mapY } = this.props.selectors.locationMapPosition;
+      const element = event.currentTarget as HTMLCanvasElement;
+      const rect = element.getBoundingClientRect();
+      const xPixels = event.clientX - rect.left;
+      const yPixels = event.clientY - rect.top;
+    
+      const mouseX = Math.floor((xPixels + mapX) / CHARACTER_WIDTH);
+      const mouseY = Math.floor((yPixels + mapY) / CHARACTER_HEIGHT);
+    
+      if (
+        mouseX !== this.props.game.mouseX ||
+        mouseY !== this.props.game.mouseY
+      ) {
+        this.props.actions.mousePositionUpdate(mouseX, mouseY);
+      }
+    });
   }
 
-  handleMovement = (event) => {
-    const keyPressed = {
+  handleMovement = (event: React.KeyboardEvent<HTMLCanvasElement>) => {
+    const keyPressed: { [key: number]: string } = {
       87: 'w',
       65: 'a',
       83: 's',
       68: 'd'
     }[event.keyCode];
 
-    let { positionX = 0, positionY = 0 } = this.props.character.data;
+    let { x = 0, y = 0 } = this.props.character.data;
 
     switch(keyPressed) {
       case 'w':
-        positionY--;
+        y--;
         break;
       case 'a':
-        positionX--;
+        x--;
         break;
       case 's':
-        positionY++;
+        y++;
         break;
       case 'd':
-        positionX++;
+        x++;
         break;
       default: return;
     }
 
     this.props.dispatch({
       type: 'CHARACTER_UPDATE',
-      payload: { positionX, positionY },
+      payload: { x, y },
       meta: { keyPressed }
     });
   }
 
-  handleMouseClick = (event) => {
+  handleMouseClick = (event: MouseEvent<HTMLCanvasElement>) => {
     const { mouseX, mouseY } = this.props.game;
     const { dynamicCollisions } = this.props.selectors;
-    const { positionX: x, positionY: y } = this.props.character.data;
-    const { npc: npcDialog } = this.props;
+    const { x = 0, y = 0 } = this.props.character.data || {};
+    const { npcDialog } = this.props;
 
     const foundCollision = dynamicCollisions[mouseX][mouseY];
 
@@ -257,20 +272,13 @@ class GameRenderer extends React.Component<GameRendererProps, GameRendererState>
     }
   }
 
-  componentWillUnmount() {
-  }
-
   render() {
-    this.props.selectors.charactersArray[0].
     return (
       <canvas
         ref={this.canvas}
         width={this.props.game.width}
         height={this.props.game.height}
-        onMouseMove={(event) => {
-          event.persist();
-          debounceA(() => this.handleMousePosition(event));
-        }}
+        onMouseMove={this.handleMousePosition}
         onClick={this.handleMouseClick}
         style={{ position: 'relative' }}
       >
