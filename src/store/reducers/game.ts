@@ -16,7 +16,9 @@ const initialState: GameState = {
   charWidth: 32,
   charHeight: 48,
   mouseX: 0,
-  mouseY: 0
+  mouseY: 0,
+  mouseGameX: 0,
+  mouseGameY: 0
 }
 
 const gameReducer = (
