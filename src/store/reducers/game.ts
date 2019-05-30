@@ -34,6 +34,8 @@ const gameReducer = (
       ...state,
       mouseX: action.payload.mouseX,
       mouseY: action.payload.mouseY,
+      mouseGameX: action.payload.mouseGameX,
+      mouseGameY: action.payload.mouseGameY
     }
     /* WIP */
     case LOAD_LOCATION: return state;
