@@ -16,7 +16,9 @@ const initialState: GameState = {
   charWidth: 32,
   charHeight: 48,
   mouseX: 0,
-  mouseY: 0
+  mouseY: 0,
+  mouseGameX: 0,
+  mouseGameY: 0
 }
 
 const gameReducer = (
@@ -32,6 +34,8 @@ const gameReducer = (
       ...state,
       mouseX: action.payload.mouseX,
       mouseY: action.payload.mouseY,
+      mouseGameX: action.payload.mouseGameX,
+      mouseGameY: action.payload.mouseGameY
     }
     /* WIP */
     case LOAD_LOCATION: return state;

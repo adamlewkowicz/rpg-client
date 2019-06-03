@@ -2,7 +2,7 @@ import {
   $_MESSAGE_RECEIVE,
   MESSAGE_SEND,
   $_MESSAGE_ACKNOWLEDGE
-} from 'rpg-shared/dist/consts';
+} from 'rpg-shared/lib/consts';
 import { ChatState } from 'rpg-shared/lib/store';
 import { ChatActions } from 'rpg-shared/lib/action-types/union-types';
 
@@ -30,22 +30,22 @@ const chatReducer = (
           global: [...state.global, action.payload]
         }
         case 'PRIVATE': {
-          const { [action.meta.to as any]: prevMessages = [], ...rest } = state.private;
+          const { [action.meta.to as number]: prevMessages = [], ...rest } = state.private;
           return {
             ...state,
             private: {
               ...rest,
-              [action.meta.to as any]: [...prevMessages, action.payload]
+              [action.meta.to as number]: [...prevMessages, action.payload]
             }
           }
         }
         case 'GROUP': {
-          const { [action.meta.to as any]: prevMessages = [], ...rest } = state.group;
+          const { [action.meta.to as number]: prevMessages = [], ...rest } = state.group;
           return {
             ...state,
             group: {
               ...rest,
-              [action.meta.to as any]: [...prevMessages, action.payload]
+              [action.meta.to as number]: [...prevMessages, action.payload]
             }
           }
         }
