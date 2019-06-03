@@ -7,8 +7,8 @@ import {
   CHARACTER_WIDTH, CHARACTER_HEIGHT
 } from '../consts';
 import { normalize } from '../../utils';
-import { LocationState } from 'rpg-shared/store'
-import { LocationActions } from 'rpg-shared/action-types/union-types';
+import { LocationState } from 'rpg-shared/lib/store'
+import { LocationActions } from 'rpg-shared/lib/action-types/union-types';
 
 const initialState: LocationState = {
   data: null,

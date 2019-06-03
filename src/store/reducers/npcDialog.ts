@@ -1,6 +1,6 @@
-import * as Actions from 'rpg-shared/action-types';
+import * as Actions from 'rpg-shared/lib/action-types';
 import { NPC_DIALOG_REQUEST, $_NPC_DIALOG_RESPONSE } from 'rpg-shared/dist/consts';
-import { NpcDialogState } from 'rpg-shared/store';
+import { NpcDialogState } from 'rpg-shared/lib/store';
 
 const initialState: NpcDialogState = {
   data: null,

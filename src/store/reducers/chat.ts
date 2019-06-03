@@ -3,8 +3,8 @@ import {
   MESSAGE_SEND,
   $_MESSAGE_ACKNOWLEDGE
 } from 'rpg-shared/dist/consts';
-import { ChatState } from 'rpg-shared/store';
-import { ChatActions } from 'rpg-shared/action-types/union-types';
+import { ChatState } from 'rpg-shared/lib/store';
+import { ChatActions } from 'rpg-shared/lib/action-types/union-types';
 
 const initialState: ChatState = {
   private: {},
