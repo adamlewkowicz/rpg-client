@@ -1,7 +1,8 @@
 import {
   $_LOAD_GAME, $_CHARACTER_UPDATE,
   $_CHARACTER_JOIN, $_CHARACTER_LEAVE,
-  $_ITEM_DROPPED_ADD, $_ITEM_DROPPED_REMOVE
+  $_ITEM_DROPPED_ADD, $_ITEM_DROPPED_REMOVE,
+  $_FIGHT_ACTION_RESULT
 } from 'rpg-shared/dist/consts';
 import {
   CHARACTER_WIDTH, CHARACTER_HEIGHT
@@ -9,6 +10,7 @@ import {
 import { normalize } from '../../utils';
 import { LocationState } from 'rpg-shared/lib/store'
 import { LocationActions } from 'rpg-shared/lib/action-types/union-types';
+
 
 const initialState: LocationState = {
   data: null,
@@ -76,6 +78,19 @@ const locationReducer = (
       const { [action.meta.itemId]: deleted, ...droppedItems } = state.droppedItems;
       return { ...state, droppedItems };
     }
+    case $_FIGHT_ACTION_RESULT:
+      const { targetType, targetId, result } = action.payload;
+      const property = targetType === 'CHARACTER' ? 'characters' : 'mobs';
+      return {
+        ...state,
+        [property]: {
+          ...state[property],
+          [targetId]: {
+            ...state[property][targetId],
+            ...result
+          }
+        }
+      }
     default: return state;
   }
 }

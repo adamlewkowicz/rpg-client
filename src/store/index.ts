@@ -32,7 +32,7 @@ export const store = createStore(
   composeEnhancers(
     applyMiddleware(
       thunk,
-      <any>ioMiddleware
+      ioMiddleware
     )
   )
 );

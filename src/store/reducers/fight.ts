@@ -9,6 +9,7 @@ import { FightActions } from 'rpg-shared/lib/action-types/union-types';
 const initialState: FightState = {
   id: null,
   actions: [],
+  targets: [],
   status: null
 }
 
